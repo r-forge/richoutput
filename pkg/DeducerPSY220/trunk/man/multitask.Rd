@@ -105,7 +105,5 @@ multitask.long1 <- melt(data = multitask.long
 , variable_name = "movie"
 , na.rm = TRUE
 )
-
-
 }
 \keyword{datasets}
