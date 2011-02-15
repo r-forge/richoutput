@@ -7,7 +7,7 @@ Prints objects of class eff for HTML display
 Over-rides the print method for eff objects to improve their display in HTML
 }
 \usage{
-print.eff(x, type = c("response", "link"), ...)
+\method{print}{eff}(x, type = c("response", "link"), ...)
 }
 \arguments{
   \item{x}{

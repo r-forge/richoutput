@@ -9,7 +9,7 @@ Print anova or Anova results in HTML
 Over-rides the print methods of objects of class anova or Anova for display in HTML
 }
 \usage{
-print.anova(x, digits = max(getOption("digits") - 2, 3), signif.stars = getOption("show.signif.stars"), ...)
+\method{print}{anova}(x, digits = max(getOption("digits") - 2, 3), signif.stars = getOption("show.signif.stars"), ...)
 }
 \arguments{
   \item{x}{

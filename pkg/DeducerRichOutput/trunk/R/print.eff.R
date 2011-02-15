@@ -11,7 +11,7 @@ print.eff <- function (x, type = c("response", "link"), ...)
     if (x$discrepancy > 0.001) 
         code = paste(code,"<p>Warning: There is an average discrepancy of", 
             round(x$discrepancy, 3), "percent in the 'safe' predictions for effect", 
-            x$term, "</p>"))
+            x$term, "</p>")
 	code = paste(code,"<pre>")
 	cat(code)
     invisible(x)

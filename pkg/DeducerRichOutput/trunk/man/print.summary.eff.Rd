@@ -7,7 +7,7 @@ Print summary.eff objects for HTML display
 Over-rides the print.summary.eff method to display the summary.eff objects in HTML.
 }
 \usage{
-print.summary.eff(x, ...)
+\method{print}{summary.eff}(x, ...)
 }
 \arguments{
   \item{x}{
