@@ -1,0 +1,9 @@
+Package: DeducerRichOutput
+Version: 0.3.5
+Date: 2011-02-14
+Title: Rich Output Display for Deducer
+Author: Bill Altermatt & Ian Fellows
+Maintainer: Bill Altermatt <altermattw@hanover.edu>
+Description: HTML output support for Deducer
+Depends: Deducer
+License: GPL-2
