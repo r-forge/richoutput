@@ -22,9 +22,11 @@ print.anova <- function (x, digits = max(getOption("digits") - 2, 3), signif.sta
 ...)
 {
 code = "</pre>"
-if (!is.null(heading <- attr(x, "heading")))
-heading <- paste(heading, collapse = "<br/> ")
-code = paste(code,"<h1>",heading,"</h1>")
+if (!is.null(heading <- attr(x, "heading"))) {
+	heading <- paste(heading, collapse = "<br/> ")
+	heading <- gsub("\n","<br/>",heading)
+	}
+code = paste(code,"<h2>",heading,"</h2>")
 nc <- dim(x)[2L]
 if (is.null(cn <- colnames(x)))
 stop("'anova' object must have colnames")
