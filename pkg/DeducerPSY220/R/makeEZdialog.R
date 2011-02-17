@@ -36,7 +36,7 @@ makeEZDialog <- function() {
 		#Add an 'Options' button
 		JButton <- J("javax.swing.JButton")
 		button <- new(JButton,"Options")
-		addComponent(ezDialog,button,830,290,880,120)
+		addComponent(ezDialog,button,830,180,880,10)
 		setSize(button,200L,50L)
 		
 		#Listen for the button to be pressed
@@ -53,7 +53,7 @@ makeEZDialog <- function() {
 		subEZ <- new(SimpleRSubDialog,ezDialog,"ANOVA: Options")
 		setSize(subEZ,350,300)
 		optionEZ <- new(CheckBoxesWidget,"Options",c("Detailed output (SS, LR, AIC, etc.)", 
-			"Plot", "Non-parametric permutation test", 
+			"Non-parametric permutation test", 
 			"Descriptive statistics"))		
 			#add text field to enter number of permutations
 				JLabel <- J("javax.swing.JLabel")
@@ -63,6 +63,86 @@ makeEZDialog <- function() {
 				addComponent(subEZ, permLabel, 710, 800, 810, 50)
 				addComponent(subEZ, permValue, 710, 900, 810, 610)			
 		addComponent(subEZ, optionEZ, 10, 990, 700, 10)
+
+		#Add a 'Plot' button
+		JButton <- J("javax.swing.JButton")
+		plotButton <- new(JButton,"Plot")
+		addComponent(ezDialog,plotButton,830,360,880,190)
+		setSize(plotButton,200L,50L)
+
+		#Listen for the plot button to be pressed
+		plotFunction <- function(cmd,ActionEvent){
+			plotEZ$setLocationRelativeTo(plotButton)
+			plotEZ$run()
+		}
+		plotListener <- new(ActionListener)
+		plotListener$setFunction(toJava(plotFunction))
+		plotButton$addActionListener(plotListener)
+
+		#make Plot subDialog
+		plotEZ <- new(SimpleRSubDialog,ezDialog,"ANOVA: Plot")
+		setSize(plotEZ,520L,400L)
+		
+			#add variable selector
+			plotVariableSelector <- new(VariableSelectorWidget)
+			plotVariableSelector$setTitle("plotData")
+			addComponent(plotEZ,plotVariableSelector, 10, 420, 820, 10)
+
+			buffer = 10
+			listHeight = 150
+			textHeight = 60
+			textTop = 10
+			textLeft = 690
+			textRight = 990
+			
+			#add a list for x-axis factor
+			xList<- new(SingleVariableWidget,"Factor for x-axis",plotVariableSelector)
+			xList$setTitle("x")
+			addComponent(plotEZ, xList, textTop, 990, textTop + listHeight, 490)
+			
+			#add a list for legend factor
+			textTop = textTop + listHeight + buffer
+			splitList<- new(SingleVariableWidget,"Factor for legend",plotVariableSelector)
+			splitList$setTitle("split")
+			addComponent(plotEZ, splitList, textTop, 990, textTop + listHeight, 490)
+	
+			#add text field to enter new x-axis label
+			textTop = textTop + listHeight + buffer
+			xLabel <- new(JLabel,"New label for x-axis:")
+			xValue <- new(TextFieldWidget)
+			xValue$setTitle("x_lab")
+			addComponent(plotEZ, xLabel, textTop, textLeft - 10, textTop + textHeight, textLeft - 210)
+			addComponent(plotEZ, xValue, textTop, textRight, textTop + textHeight, textLeft)
+			
+			#add text field to enter new y-axis label
+			textTop = textTop + textHeight + buffer; 
+			yLabel <- new(JLabel,"New label for y-axis:")
+			yValue <- new(TextFieldWidget)
+			yValue$setTitle("y_lab")
+			addComponent(plotEZ, yLabel, textTop, textLeft - 10, textTop + textHeight, textLeft - 210)
+			addComponent(plotEZ, yValue, textTop, textRight, textTop + textHeight, textLeft)
+			
+			#add text field to enter new legend label
+			textTop = textTop + textHeight + buffer; 
+			splitLabel <- new(JLabel,"New label for legend:")
+			splitValue <- new(TextFieldWidget)
+			splitValue$setTitle("split_lab")
+			addComponent(plotEZ, splitLabel, textTop, textLeft - 10, textTop + textHeight, textLeft - 210)
+			addComponent(plotEZ, splitValue, textTop, textRight, textTop + textHeight, textLeft)
+
+			#add a list for difference score factor
+			textTop = textTop + textHeight + buffer; 
+			diffList<- new(SingleVariableWidget,"Factor for difference score",plotVariableSelector)
+			splitList$setTitle("diff")
+			addComponent(plotEZ, diffList, textTop, 990, textTop + listHeight, 490)
+			
+			#add combo box for reversing difference
+			textTop = textTop + listHeight + buffer;
+			revDiff <- new(ComboBoxWidget,"Reverse difference?",c("No","Yes"))
+			revDiff$setDefaultModel("No")
+			revDiff$setTitle("reverse_diff")
+			addComponent(plotEZ, revDiff, textTop, 990, textTop + listHeight, 690)
+
 				
 		#setting Run and Check functions
 		ezDialog$setCheckFunction(toJava(.ezAnalysisCheckFunction))

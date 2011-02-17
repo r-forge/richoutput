@@ -56,13 +56,41 @@
 			, reverse_diff = FALSE
 			, detailed = detailed
 			)
+		names(results)[1] <- "ANOVA: Type II Sums of Squares"
 		for(i in 1:length(results)) {
 			code = paste(code,"<h3>",names(results[i]),"</h3>",sep="")
 			code = paste(code,h.df(results[[i]], rowcolors = TRUE),sep="")
 			}
 	# plot
 		if(any(grepl("Plot", state$Options))) {
-			
+			graph <- ezPlot(
+			    data = data
+			    , dv = dv
+			    , wid = wid
+			    , within = within
+			    , between = between
+			    , between_full = NULL
+			    , x # This needs to be entered by the user, var to be plotted on x-axis
+			    , do_lines = TRUE
+			    , do_bars = TRUE
+			    , bar_width = NULL
+			    , bar_size = NULL
+			    , split = NULL # entered by user to split by factor 2
+			    , row = NULL # not sure what this means - split data into rows
+			    , col = NULL  # not sure what this means - split data into rows
+			    , to_numeric = NULL
+			    , x_lab = NULL # modified by user
+			    , y_lab = NULL # modified by user
+			    , split_lab = NULL # key label - modified by user
+			    , levels = NULL # can rename factor order or factor levels
+			    , diff = NULL # can turn 2-level within-Ss variable into diff score
+			    , reverse_diff = FALSE # reverse the difference in 'diff'
+			    , dv_levs = NULL
+			    , dv_labs = NULL
+			    , row_y_free = FALSE
+				)
+			graph + theme_bw()
+			print(graph)
 			}
 	# Non-parametric permutation test
 		if(any(grepl("permutation", state$Options))) {
