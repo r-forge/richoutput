@@ -73,17 +73,12 @@
 	# plot
 	if(!is.null(state$x)) {
 		cmd = paste("dev.new()\n",
-		"g <- ggplot() +\n", 
-		"theme_bw() +\n",
-		"geom_errorbar(aes(y = ",state$dv,", x = ", state$x,", linetype = ",state$split, ", group = ",state$split,"),\n",
-			"data=",state$plotData,",width = 0.4, fun.data = mean_cl_normal, conf.int = 0.95, stat = 'summary',\n",
+		"g <- ggplot() + theme_bw() +\n",
+		"geom_errorbar(aes(y = ",state$dv,", x = ", state$x,", linetype = ",state$split, ", group = ",state$split,"),",
+			"data=",state$plotData,",width = 0.4, fun.data = mean_cl_normal, conf.int = 0.95, stat = 'summary',",
 			"position = position_dodge(width = 0.5)) +\n",
-		 "geom_point(aes(x = ", state$x, ", y = ",state$dv, ", shape = ",state$split, ", group = ",state$split,"),\n",
-			"data=",state$plotData,",\n",
-			"size = 3.0,\n",
-			"fun.data = mean_cl_normal,\n",
-			"conf.int = 0.95,stat = 'summary',\n",
-			"position = position_dodge(width = 0.5))\n",
+		 "geom_point(aes(x = ", state$x, ", y = ",state$dv, ", shape = ",state$split, ", group = ",state$split,"),",
+			"data=",state$plotData,",size = 3.0, fun.data = mean_cl_normal, conf.int = 0.95,stat = 'summary', position = position_dodge(width = 0.5))\n",
 		"print(g)")
 		execute(cmd)	
 	}
