@@ -14,6 +14,7 @@ Level of helping given by seminary students in three levels of time pressure and
     \item{\code{messag}}{factor indicating whether seminary student subject was on their way to deliver speech on the parable of the Good Samaritan or on jobs for seminary graduates}
     \item{\code{time.pressure}}{factor indicating degree of time pressure, either low, medium, or high}
     \item{\code{helping}}{Integer between 0 and 5 indicating degree of helping, with higher values indicating more helping.}
+    \item{\code{subj}}{Subject identification number, an integer from 1 to 40.}
   }
 }
 \details{
