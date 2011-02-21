@@ -133,7 +133,7 @@ makeEZDialog <- function() {
 			#add a list for difference score factor
 			textTop = textTop + textHeight + buffer; 
 			diffList<- new(SingleVariableWidget,"Factor for difference score",plotVariableSelector)
-			splitList$setTitle("diff")
+			diffList$setTitle("diff")
 			addComponent(plotEZ, diffList, textTop, 990, textTop + listHeight, 490)
 			
 			#add combo box for reversing difference

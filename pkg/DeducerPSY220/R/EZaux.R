@@ -25,6 +25,15 @@
 		if(!is.null(state$observed)) observed = eval(parse(text=paste(".(",paste(state$observed,sep="",collapse=","),")",sep="")))		
 		wid = eval(parse(text=paste(".(",state$wid,")",sep="")))
 		if(!is.null(state$within)) within = eval(parse(text=paste(".(",paste(state$within,sep="",collapse=","),")",sep="")))
+		if(!is.null(state$x)) x = eval(parse(text=paste(".(",state$x,")",sep="")))
+		if(!is.null(state$diff)) diff = eval(parse(text=paste(".(",state$diff,")",sep="")))
+		if(!is.null(state$split)) split = eval(parse(text=paste(".(",state$split,")",sep="")))
+		reverse_diff = FALSE
+		x_lab = y_lab = split_lab = NULL			
+			if(state$x_lab != "") x_lab = state$x_lab 
+			if(state$y_lab != "") y_lab = state$y_lab
+			if(state$split_lab != "") split_lab = state$split_lab			
+			if(state$reverse_diff == "Yes") reverse_diff = TRUE
 		detailed = FALSE
 		if(any(grepl("Detailed", state$Options))) {
 			detailed = TRUE
@@ -62,36 +71,54 @@
 			code = paste(code,h.df(results[[i]], rowcolors = TRUE),sep="")
 			}
 	# plot
-		if(any(grepl("Plot", state$Options))) {
-			graph <- ezPlot(
-			    data = data
-			    , dv = dv
-			    , wid = wid
-			    , within = within
-			    , between = between
-			    , between_full = NULL
-			    , x # This needs to be entered by the user, var to be plotted on x-axis
-			    , do_lines = TRUE
-			    , do_bars = TRUE
-			    , bar_width = NULL
-			    , bar_size = NULL
-			    , split = NULL # entered by user to split by factor 2
-			    , row = NULL # not sure what this means - split data into rows
-			    , col = NULL  # not sure what this means - split data into rows
-			    , to_numeric = NULL
-			    , x_lab = NULL # modified by user
-			    , y_lab = NULL # modified by user
-			    , split_lab = NULL # key label - modified by user
-			    , levels = NULL # can rename factor order or factor levels
-			    , diff = NULL # can turn 2-level within-Ss variable into diff score
-			    , reverse_diff = FALSE # reverse the difference in 'diff'
-			    , dv_levs = NULL
-			    , dv_labs = NULL
-			    , row_y_free = FALSE
-				)
-			graph + theme_bw()
-			print(graph)
-			}
+	if(!is.null(state$x)) {
+		cmd = paste("dev.new()\n",
+		"g <- ggplot() +\n", 
+		"theme_bw() +\n",
+		"geom_errorbar(aes(y = ",state$dv,", x = ", state$x,", linetype = ",state$split, ", group = ",state$split,"),\n",
+			"data=",state$plotData,",width = 0.4, fun.data = mean_cl_normal, conf.int = 0.95, stat = 'summary',\n",
+			"position = position_dodge(width = 0.5)) +\n",
+		 "geom_point(aes(x = ", state$x, ", y = ",state$dv, ", shape = ",state$split, ", group = ",state$split,"),\n",
+			"data=",state$plotData,",\n",
+			"size = 3.0,\n",
+			"fun.data = mean_cl_normal,\n",
+			"conf.int = 0.95,stat = 'summary',\n",
+			"position = position_dodge(width = 0.5))\n",
+		"print(g)")
+		execute(cmd)	
+	}
+	
+	
+	#	if(!is.null(state$x)) {
+#			graph <- ezPlot(
+#			    data = data
+#			    , dv = dv
+#			    , wid = wid
+#			    , within = within
+#			    , between = between
+#			    , between_full = NULL
+#			    , x = x
+#			    , do_lines = TRUE
+#			    , do_bars = TRUE
+#			    , bar_width = NULL
+#			    , bar_size = NULL
+#			    , split = split
+#			    , row = NULL # not sure what this means - split data into rows
+#			    , col = NULL  # not sure what this means - split data into rows
+#			    , to_numeric = NULL
+#			    , x_lab = x_lab
+#			    , y_lab = y_lab
+#			    , split_lab = split_lab
+#			    , levels = NULL # can rename factor order or factor levels
+#			    , diff = diff
+#			    , reverse_diff = reverse_diff
+#			    , dv_levs = NULL
+#			    , dv_labs = NULL
+#			    , row_y_free = FALSE
+#				)
+#			graph + theme_bw()
+#			print(graph)
+#			}
 	# Non-parametric permutation test
 		if(any(grepl("permutation", state$Options))) {
 			permutation <- ezPerm(
