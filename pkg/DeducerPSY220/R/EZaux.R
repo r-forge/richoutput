@@ -71,6 +71,7 @@
 			code = paste(code,h.df(results[[i]], rowcolors = TRUE),sep="")
 			}
 	# plot
+	if(is.null(state$split)) state$split = "NULL"
 	if(!is.null(state$x)) {
 		cmd = paste("dev.new()\n",
 		"g <- ggplot() + theme_bw() +\n",
