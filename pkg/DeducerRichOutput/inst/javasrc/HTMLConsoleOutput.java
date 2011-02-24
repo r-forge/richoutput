@@ -26,6 +26,7 @@ import javax.swing.text.html.StyleSheet;
 import org.rosuda.JGR.toolkit.ConsoleOutput;
 import org.rosuda.JGR.toolkit.FontTracker;
 import org.rosuda.JGR.toolkit.JGRPrefs;
+import org.rosuda.deducer.Deducer;
 
 /**
  * This class handles the rich output coming from R.
@@ -88,9 +89,9 @@ public class HTMLConsoleOutput extends ConsoleOutput {
                     if(a == JGRPrefs.RESULT){
                         if (!str.startsWith("</pre>")) { // doesn't start with </pre> so is not HTML
                              str = str.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
-                             str = "<font color = \"blue\">" + str + "</font>";
+                             str = "<font color = \"#"+ Integer.toHexString(JGRPrefs.RESULTColor.getRGB()).substring(2) + "\">" + str + "</font>";
                             }
-
+                        
 
                         // Using a buffer to store up unclosed </pre> tags
                             // Causes problems if function interrupted before closing tag is printed.
@@ -183,7 +184,7 @@ public class HTMLConsoleOutput extends ConsoleOutput {
                         if (continues) {
                             str = beginning + str;
                             continues = false;
-                            ed.insertHTML(doc, doc.getLength(), "<pre><font color = \"red\">" + str + "</font></pre>", 0, 0, null);
+                            ed.insertHTML(doc, doc.getLength(), "<pre><font color = \"#"+ Integer.toHexString(JGRPrefs.CMDColor.getRGB()).substring(2) + "\">" + str + "</font></pre>", 0, 0, null);
                             }                        
                         else if(str.startsWith("+") || str.startsWith("&gt;")) {
                             beginning = str;
@@ -192,7 +193,7 @@ public class HTMLConsoleOutput extends ConsoleOutput {
                             }
                         else {
                             str = str.replaceAll("\n", "<br/>");
-                            ed.insertHTML(doc, doc.getLength(), "<pre><font color = \"red\">" + str + "</font></pre>", 0, 0, null);
+                            ed.insertHTML(doc, doc.getLength(), "<pre><font color = \"#"+ Integer.toHexString(JGRPrefs.CMDColor.getRGB()).substring(2) + "\">" + str + "</font></pre>", 0, 0, null);
                         }
                     }
                     else{

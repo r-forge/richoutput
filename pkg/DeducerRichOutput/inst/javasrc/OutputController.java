@@ -21,6 +21,7 @@ import org.rosuda.JGR.util.ErrorMsg;
 import org.rosuda.REngine.REXPMismatchException;
 import org.rosuda.REngine.REngineException;
 import org.rosuda.deducer.Deducer;
+import org.rosuda.deducer.models.ModelExplorer;
 
 
 /**
@@ -134,6 +135,9 @@ public class OutputController {
 
 	}
 	
+	public static void replaceModelPreview(){
+		ModelExplorer.setPreviewFactory(new RichModelPreviewFactory());
+	}
 	
 
 	static class InputListener implements KeyListener{

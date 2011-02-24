@@ -35,6 +35,8 @@ print_to_html <- function(x,...){
 	
 	#replaces the input and output of the console 
 	#with rich output enabled components.
-	if(.jgr)
+	if(.jgr){
 		J("RichOutput.OutputController")$replaceConsole()
+		J("RichOutput.OutputController")$replaceModelPreview()
+	}
 }
