@@ -38,6 +38,7 @@ code = "</pre>"
 			predictors = NULL
 			}
 # This next line sends the data.frame off to be turned into an HTML table
+	x$'p-value' <- gsub("<","&lt;",format.pval(x$'p-value',eps = .001,digits=3))
 	code = paste(code,h.df(x, rowcolors = TRUE),sep="")
 		
 # Adds some notes at the bottom

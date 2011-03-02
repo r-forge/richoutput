@@ -8,7 +8,7 @@ print.summary.lm <- function (x, digits = max(3, getOption("digits") - 3), symbo
 			for (i in 2:length(callstring)) {
 				callstr = paste(callstr,str_trim(callstring[i],side="left"))
 				}
-			}
+			} else callstr = callstring
     code = paste(code, "<p><b>Call: </b>", callstr,"</p>\n")
 #    code = paste(code, "<p><b>Call: </b>", deparse(x$call),"</p>\n")
     resid <- x$residuals

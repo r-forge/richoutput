@@ -14,7 +14,7 @@ print.summary.glht <- function (x, digits = max(3, getOption("digits") - 3), ...
 			for (i in 2:length(callstring)) {
 				callstr = paste(callstr,str_trim(callstring[i],side="left"))
 				}
-			}
+			} else callstr = callstring
 		code = paste(code,"<p><b>Fit: </b>",callstr,"</p>\n")
     }
     pq <- x$test
