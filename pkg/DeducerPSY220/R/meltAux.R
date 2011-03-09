@@ -16,6 +16,9 @@
 			if(!is.null(state$variable_name)) paste(", variable_name = \"",state$variable_name,"\"\n",sep=""),
 			if(any(grepl("Remove", state$Options))) paste(", na.rm = TRUE\n"),
 			")\n",sep="")
+		if(state$dvname != "") cmd = paste(cmd,"\n","names(",state$newDataName,")",
+			"[names(",state$newDataName,")==\"value\"]<-\"",state$dvname,"\"",sep="")
+
 		execute(cmd)	
 	}
 

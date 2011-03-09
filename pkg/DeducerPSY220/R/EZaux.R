@@ -79,42 +79,16 @@
 			"data=",state$plotData,",width = 0.4, fun.data = mean_cl_normal, conf.int = 0.95, stat = 'summary',",
 			"position = position_dodge(width = 0.5)) +\n",
 		 "geom_point(aes(x = ", state$x, ", y = ",state$dv, ", shape = ",state$split, ", group = ",state$split,"),",
-			"data=",state$plotData,",size = 3.0, fun.data = mean_cl_normal, conf.int = 0.95,stat = 'summary', position = position_dodge(width = 0.5))\n",
-		"print(g)")
+			"data=",state$plotData,",size = 3.0, fun.data = mean_cl_normal, conf.int = 0.95,stat = 'summary', position = position_dodge(width = 0.5))")
+		if(!is.null(state$within)) {
+			cmd = paste(cmd,"+\ngeom_line(aes(x = ", state$x, ", y = ",state$dv, ", group = ",state$split,"),",
+			"data=",state$plotData,", fun.data = mean_cl_normal, conf.int = 0.95,stat = 'summary', position = position_dodge(width = 0.5))")
+				}
+		cmd = paste(cmd,"\nprint(g)")
 		execute(cmd)	
 	}
 	
-	
-	#	if(!is.null(state$x)) {
-#			graph <- ezPlot(
-#			    data = data
-#			    , dv = dv
-#			    , wid = wid
-#			    , within = within
-#			    , between = between
-#			    , between_full = NULL
-#			    , x = x
-#			    , do_lines = TRUE
-#			    , do_bars = TRUE
-#			    , bar_width = NULL
-#			    , bar_size = NULL
-#			    , split = split
-#			    , row = NULL # not sure what this means - split data into rows
-#			    , col = NULL  # not sure what this means - split data into rows
-#			    , to_numeric = NULL
-#			    , x_lab = x_lab
-#			    , y_lab = y_lab
-#			    , split_lab = split_lab
-#			    , levels = NULL # can rename factor order or factor levels
-#			    , diff = diff
-#			    , reverse_diff = reverse_diff
-#			    , dv_levs = NULL
-#			    , dv_labs = NULL
-#			    , row_y_free = FALSE
-#				)
-#			graph + theme_bw()
-#			print(graph)
-#			}
+
 	# Non-parametric permutation test
 		if(any(grepl("permutation", state$Options))) {
 			permutation <- ezPerm(
