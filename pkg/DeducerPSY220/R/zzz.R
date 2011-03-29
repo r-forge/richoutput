@@ -12,13 +12,13 @@
 		if(.windowsGUI){			
 			winMenuAddItem("Data", "Compute Mean", "deducer('Compute Mean')")
 			winMenuAddItem("Data", "Impute Data", "deducer('Impute Data')")
-			winMenuAddItem("Analysis", "Paired Samples Test", "deducer('Paired Sample Test')")
+			winMenuAddItem("Analysis", "Paired Samples Test", "deducer('Paired Samples Test')")
 			winMenuAddItem("Data", "Convert to Long Form", "deducer('Convert to Long Form')")
 			winMenuAddItem("Analysis", "ANOVA", "deducer('ANOVA')")
 		}else if(.jgr){			
 			jgr.addMenuItem("Data", "Compute Mean", "deducer('Compute Mean')")
 			jgr.addMenuItem("Data", "Impute Data", "deducer('Impute Data')")
-			jgr.addMenuItem("Analysis", "Paired Samples Test", "deducer('Paired Sample Test')")
+			jgr.addMenuItem("Analysis", "Paired Samples Test", "deducer('Paired Samples Test')")
 			jgr.addMenuItem("Data", "Convert to Long Form", "deducer('Convert to Long Form')")
 			jgr.addMenuItem("Analysis", "ANOVA", "deducer('ANOVA')")
 		}
