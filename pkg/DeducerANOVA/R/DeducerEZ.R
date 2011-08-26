@@ -59,11 +59,6 @@ DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL,
 	
 	print(to_return)
 
-	ti = paste("[ANOVA] ",as.character(dv), " ~ ", if(!is.null(between)) paste("btw(",paste(as.character(between),collapse="*"),")",sep=""), 
-		if(!is.null(within)) paste("w/in(",paste(as.character(within),collapse="*"),")",sep=""),sep="")
-	record <- J("RichOutput.OutputController")$record
-	elem <- record$getActiveElement()
-	elem$setTitle(ti)
 
 # plot
 	# If any rows were cut, pass the row numbers along to ggplot in 'excluded'
@@ -77,11 +72,16 @@ DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL,
 		#ti = paste("[plot] ",as.character(dv), " ~ ", as.character(x), if(!is.null(split)) paste(" by ",as.character(split),sep=""),sep="")
 #		elem <- record$getActiveElement()
 #		elem$setTitle(ti)
-	}
+		}
 
 # Tukey Post Hoc tests for between-subjects factors
 
-			
+# Setting the title of the output element
+	ti = paste("[ANOVA] ",as.character(dv), " ~ ", if(!is.null(between)) paste("btw(",paste(as.character(between),collapse="*"),")",sep=""), 
+		if(!is.null(within)) paste("w/in(",paste(as.character(within),collapse="*"),")",sep=""),sep="")
+	record <- J("RichOutput.OutputController")$record
+	elem <- record$getActiveElement()
+	elem$setTitle(ti)
 
 	
 	}
