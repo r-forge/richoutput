@@ -1,0 +1,9 @@
+Package: DeducerANOVA
+Version: 0.1
+Date: 2011-08-25
+Title: Factorial ANOVA for Deducer
+Author: Bill Altermatt
+Maintainer: Bill Altermatt <altermattw@hanover.edu>
+Description: Implements several functions from package 'ez' for ANOVA of factorial designs, including within-subjects and mixed designs.
+Depends: Deducer
+License: GPL-2
