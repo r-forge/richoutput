@@ -6,7 +6,7 @@ print.ez <- function(results) {
 			code = paste(code,h.df(results[[i]], rowcolors = TRUE),"\n",sep="")
 			if(!is.null(attr(results[i],"warnings"))) code = paste(code,attr(results[i],"warnings"))
 		}
-#	if(!is.null(attr(results,"warnings"))) code = paste(code,attr(results,"warnings"))
+	if(!is.null(attr(results,"warnings"))) code = paste(code,attr(results,"warnings"))
 	code = paste(code,"<pre>\n")
 	cat(code)
 	invisible(results)
