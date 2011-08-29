@@ -3,5 +3,5 @@ ANOVAposthoc <- function(data,dv,between) {
 	y <- data[,match(dv,names(data))]
 	data$tall <- with(data, interaction(btw))
 	postHoc <- glht(lm(y ~ tall, data = data),linfct = mcp(tall = "Tukey"))
-	cat(summary(postHoc))
+	return(postHoc)
 	}
