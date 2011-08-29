@@ -1,8 +1,4 @@
 	.ezAnalysisRunFunction <- function(state){
-		vars = c(state$data,state$dv,state$wid,state$between,state$observed,state$within)
-		for var in vars {
-			
-			}
 		cmd = paste("DeducerEZ(data = ",state$data,", dv = .(",state$dv,"), wid = .(",sep="")
 		if(!is.null(state$wid)) cmd = paste(cmd,state$wid,")\n",sep="") else cmd = paste(cmd,"New.Subject.ID)\n",sep="")
 		if(!is.null(state$between)) 
