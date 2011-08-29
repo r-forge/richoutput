@@ -40,7 +40,7 @@ DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL,
 			))
 
 	to_return <- c(to_return,results)
-#	if (!is.null(attr(results,"warnings")))	attr(to_return,"warnings") <- attr(results,"warnings")
+	if (!is.null(attr(results,"warnings")))	attr(to_return$ANOVA,"warnings") <- attr(results,"warnings")
 
 	if(descriptives) {
 		to_return$'Descriptive Statistics' <- withConditions(ezStats( 
@@ -55,16 +55,16 @@ DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL,
 				)
 			)
 		}
-
+	
 	class(to_return) = "ez"
 	
 	print(to_return)
 
 # Tukey Post Hoc tests for between-subjects factors
 	if(posthoc) {
-		to_return$'Tukey Post-Hoc Tests' <- ANOVAposthoc(data,dv,between)
+		print(summary(ANOVAposthoc(data,dv,between)))
 		}
-		
+
 
 # plot
 	# If any rows were cut, pass the row numbers along to ggplot in 'excluded'
