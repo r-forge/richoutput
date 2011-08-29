@@ -54,7 +54,8 @@ makeEZDialog <- function() {
 		setSize(subEZ,350,300)
 		optionEZ <- new(CheckBoxesWidget,"Options",c("Type II SS (default is Type III)",
 			"Detailed output (SS, LR, AIC, etc.)", 
-			"Descriptive statistics"))		
+			"Descriptive statistics",
+			"Tukey pairwise comparisons"))		
 						
 		addComponent(subEZ, optionEZ, 10, 990, 700, 10)
 

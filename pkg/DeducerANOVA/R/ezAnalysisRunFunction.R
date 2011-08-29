@@ -29,7 +29,10 @@
 		if(!is.null(state$x_lab)) cmd = paste(cmd, ", x_lab = \"",state$x_lab,"\"\n",sep="")
 		if(!is.null(state$y_lab)) cmd = paste(cmd, ", y_lab = \"",state$y_lab,"\"\n",sep="")
 		if(!is.null(state$split_lab)) cmd = paste(cmd, ", split_lab = \"",state$split_lab,"\"\n",sep="")
-		if(!is.null(state$newID)) cmd = paste(cmd, ", newID = TRUE\n",sep="")		
+		if(any(grepl("Tukey", state$Options))) {
+			cmd = paste(cmd,", posthoc = TRUE\n",sep="")
+			}
+		if(!is.null(state$newID)) cmd = paste(cmd, ", newID = TRUE\n",sep="")
 		cmd = paste(cmd,")",sep="")
 		if(is.null(state$wid)) cmd = paste(state$data,"$New.Subject.ID <- rownames(",state$data,")\n",cmd,sep="")
 		execute(cmd)

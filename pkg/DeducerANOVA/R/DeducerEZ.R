@@ -3,7 +3,8 @@
 
 DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL, 
 	within = NULL, type = 3, detailed = FALSE, descriptives = FALSE, 
-	x = NULL, split = NULL, x_lab = NULL, y_lab = NULL, split_lab = NULL, newID = FALSE) 
+	x = NULL, split = NULL, x_lab = NULL, y_lab = NULL, split_lab = NULL, 
+	posthoc = FALSE, newID = FALSE) 
 	{
 	# Setting options to permit Type-3 SS that correspond to SAS and SPSS output:
 		options(contrasts=c("contr.sum","contr.poly"))
@@ -54,11 +55,16 @@ DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL,
 				)
 			)
 		}
-		
+
 	class(to_return) = "ez"
 	
 	print(to_return)
 
+# Tukey Post Hoc tests for between-subjects factors
+	if(posthoc) {
+		to_return$'Tukey Post-Hoc Tests' <- ANOVAposthoc(data,dv,between)
+		}
+		
 
 # plot
 	# If any rows were cut, pass the row numbers along to ggplot in 'excluded'
@@ -74,7 +80,8 @@ DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL,
 #		elem$setTitle(ti)
 		}
 
-# Tukey Post Hoc tests for between-subjects factors
+
+
 
 # Setting the title of the output element
 	ti = paste("[ANOVA] ",as.character(dv), " ~ ", if(!is.null(between)) paste("btw(",paste(as.character(between),collapse="*"),")",sep=""), 
