@@ -9,7 +9,7 @@ including within-subjects and mixed designs. Includes functions for
 reshaping within-subjects data from wide to long format.
 }
 \usage{
-DeducerEZ(data, dv, wid, between = NULL, observed = NULL, within = NULL, type = 3, detailed = FALSE, descriptives = FALSE, x = NULL, split = NULL, x_lab = NULL, y_lab = NULL, split_lab = NULL, newID = FALSE, test.var = NULL, at.var = NULL, var.equal = FALSE, p.adjust.method = "holm")
+DeducerEZ(data, dv, wid, between = NULL, observed = NULL, within = NULL, type = 3, detailed = FALSE, descriptives = FALSE, x = NULL, split = NULL, x_lab = NULL, y_lab = NULL, split_lab = NULL, test.var = NULL, at.var = NULL, var.equal = FALSE, p.adjust.method = "holm")
 }
 \arguments{
   \item{data}{
@@ -69,11 +69,11 @@ One of the character vector values of p.adjust.method. See help(p.adjust) for ac
 }
 \value{
 Returns a list of data.frames.  
-\item{Model Details }{ a summary of the model details.}
-\item{ANOVA }  {The second is the results of the ANOVA, including SS if they are requested in sQuote(detailed).}
-\item{Levene's test } {The third can be Levene's test for equality of variances if there are only between-subjects factors.}
-\item{Descriptives } {If they are requested, the last item is descriptive statistics: N, mean, SD.}
-\item{Tests of Simple Main Effects} {Output from the sme (Simple Main Effects) function. See help(sme) for details.}
+\item{Model Details}{ a summary of the model details.}
+\item{ANOVA}{The second is the results of the ANOVA, including SS if they are requested in sQuote(detailed).}
+\item{Levene's test}{The third can be Levene's test for equality of variances if there are only between-subjects factors.}
+\item{Descriptives}{If they are requested, the last item is descriptive statistics: N, mean, SD.}
+\item{Tests of Simple Main Effects}{Output from the sme (Simple Main Effects) function. See help(sme) for details.}
 }
 \references{
 Bakeman, R. (2005). Recommended effect size statistics for repeated measures designs. Behavior Research Methods, 37 (3), 379-384.
@@ -82,5 +82,5 @@ Bakeman, R. (2005). Recommended effect size statistics for repeated measures des
 Bill Altermatt
 }
 \seealso{
-\code{\link{ezANOVA}}, \code{\link{sme}} 
+\code{\link{ez::ezANOVA}}, \code{\link{sme}} 
 }

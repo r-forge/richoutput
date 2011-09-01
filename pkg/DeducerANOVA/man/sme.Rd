@@ -32,9 +32,6 @@ Logical value indicating whether the variances within the cells of the factorial
 A method for computing adjusted p-values.  The default is 'holm'.  See help(p.adjust) for the available options.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
 A data.frame consisting of 7 columns. 
 The first column provides the levels of the at.var.  
@@ -58,3 +55,4 @@ ad1
 ad2 <- sme(Adler,.(rating),.(expectation),at.var=.(instruction))
 ad2
 attributes(ad2)
+}
