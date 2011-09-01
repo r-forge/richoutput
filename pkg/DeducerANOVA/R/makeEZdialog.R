@@ -51,14 +51,54 @@ makeEZDialog <- function() {
 
 		#make Options subDialog
 		subEZ <- new(SimpleRSubDialog,ezDialog,"ANOVA: Options")
-		setSize(subEZ,350,300)
-		optionEZ <- new(CheckBoxesWidget,"Options",c("Type II SS (default is Type III)",
-			"Detailed output (SS, LR, AIC, etc.)", 
-			"Descriptive statistics",
-			"Tukey pairwise comparisons"))		
-						
-		addComponent(subEZ, optionEZ, 10, 990, 700, 10)
+			setSize(subEZ,350,350)
+			optionEZ <- new(CheckBoxesWidget,"Options",c("Type II SS (default is Type III)",
+				"Detailed output (SS, LR, AIC, etc.)", 
+				"Descriptive statistics"))
+#				,"Tukey pairwise comparisons")
+			addComponent(subEZ, optionEZ, 10, 990, 700, 10)
 
+		SMEdialog <- new(SimpleRSubDialog,ezDialog,"Simple Main Effects")
+			setSize(SMEdialog,670L,400L)
+			
+			#add variable selector
+			varSelector <- new(VariableSelectorWidget)
+			varSelector$setTitle("SMEdata")
+			addComponent(SMEdialog,varSelector, 10, 420, 820, 10)
+			
+			#Differences between levels of X
+			testList<- new(SingleVariableWidget,"Test differences between levels of:",varSelector)
+			testList$setTitle("test.factor")
+			addComponent(SMEdialog, testList, 10, 990, 200, 490)	
+			
+			#At each level of Y
+			atList<- new(SingleVariableWidget,"within each level of:",varSelector)
+			atList$setTitle("at.factor")
+			addComponent(SMEdialog, atList, 210, 990, 400, 490)
+
+			#Method for adjusting p-values
+			p.adj <- new(ComboBoxWidget,p.adjust.methods)
+				p.adj$setDefaultModel("holm")
+				p.adj$setTitle("p-value adjustment method",TRUE)
+				addComponent(SMEdialog, p.adj, 410, 990, 580, 500)
+				
+			#Equal variances assumed?
+			eqVar <- new(CheckBoxesWidget,c("Equal variances assumed","box 2"))
+			eqVar$setTitle("var.equal")
+			eqVar$removeButton(1L)
+			addComponent(SMEdialog, eqVar, 590, 990, 760, 500)
+		
+			SMEb <- new(JButton,"Simple Main Effects")
+					SMEfunction <- function(cmd,ActionEvent) {
+						SMEdialog$setLocationRelativeTo(SMEb)
+						SMEdialog$run()
+						}
+					SMElistener <- new(ActionListener)
+					SMElistener$setFunction(toJava(SMEfunction))
+					SMEb$addActionListener(SMElistener)
+					addComponent(subEZ, SMEb, 710, 790, 810, 210)
+#					setSize(SMEb,400L,50L)
+				
 		#Add a 'Plot' button
 		JButton <- J("javax.swing.JButton")
 		plotButton <- new(JButton,"Plot")

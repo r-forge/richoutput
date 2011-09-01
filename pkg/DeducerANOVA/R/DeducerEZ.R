@@ -4,7 +4,9 @@
 DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL, 
 	within = NULL, type = 3, detailed = FALSE, descriptives = FALSE, 
 	x = NULL, split = NULL, x_lab = NULL, y_lab = NULL, split_lab = NULL, 
-	posthoc = FALSE, newID = FALSE) 
+#	posthoc = FALSE,   Note: Cutting Tukey results b/c don't seem correct.
+	newID = FALSE, test.var = NULL, at.var = NULL, var.equal = FALSE,
+	p.adjust.method = "holm") 
 	{
 	# Setting options to permit Type-3 SS that correspond to SAS and SPSS output:
 		options(contrasts=c("contr.sum","contr.poly"))
@@ -43,17 +45,36 @@ DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL,
 	if (!is.null(attr(results,"warnings")))	attr(to_return$ANOVA,"warnings") <- attr(results,"warnings")
 
 	if(descriptives) {
-		to_return$'Descriptive Statistics' <- withConditions(ezStats( 
-			    data = data
-			    , dv = dv
-			    , wid = wid
-			    , within = within
-			    , between = between # or could be a subset of between
-			    , between_full = between
-			    , diff = NULL
-			    , reverse_diff = FALSE
+		 # code borrowed from ezStats
+			temp = idata.frame(cbind(data,ezDV = data[,names(data) == as.character(dv)]))
+			descrip <- ddply(temp,structure(as.list(c(between,within)),class = 'quoted')
+				,function(x){
+					N = length(x$ezDV)
+					Mean = mean(x$ezDV)
+					SD = sd(x$ezDV)
+					return(c(N = N, Mean = Mean, SD = SD))
+					}
 				)
-			)
+			to_return$'Descriptive Statistics' <- descrip
+			}
+	
+			#withConditions(ezStats( 
+#			    data = data
+#			    , dv = dv
+#			    , wid = wid
+#			    , within = within
+#			    , between = between # or could be a subset of between
+#			    , between_full = between
+#			    , diff = NULL
+#			    , reverse_diff = FALSE
+#				)
+#			)
+#		}
+#
+# Simple Main Effects
+	if(!is.null(test.var) & !is.null(at.var)) {
+		is.within <- test.var %in% within
+		to_return$'Tests of Simple Main Effects' <- sme(data,dv,test.var,is.within,at.var,var.equal,p.adjust.method)
 		}
 	
 	class(to_return) = "ez"
@@ -61,10 +82,10 @@ DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL,
 	print(to_return)
 
 # Tukey Post Hoc tests for between-subjects factors
-	if(posthoc) {
-		print(summary(ANOVAposthoc(data,dv,between)))
-		}
-
+#	if(posthoc) {
+#		print(summary(ANOVAposthoc(data,dv,between)))
+#		}
+#
 
 # plot
 	# If any rows were cut, pass the row numbers along to ggplot in 'excluded'
