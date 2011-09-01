@@ -5,7 +5,7 @@ DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL,
 	within = NULL, type = 3, detailed = FALSE, descriptives = FALSE, 
 	x = NULL, split = NULL, x_lab = NULL, y_lab = NULL, split_lab = NULL, 
 #	posthoc = FALSE,   Note: Cutting Tukey results b/c don't seem correct.
-	newID = FALSE, test.var = NULL, at.var = NULL, var.equal = FALSE,
+	test.var = NULL, at.var = NULL, var.equal = FALSE,
 	p.adjust.method = "holm") 
 	{
 	# Setting options to permit Type-3 SS that correspond to SAS and SPSS output:
@@ -123,7 +123,7 @@ DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL,
 			return("Please select at least one between-subjects or within-subjects factor")
 #		make sure subject ID is specified
 		if(is.null(state$wid) & is.null(state$newID))
-			return("Please specify a subject ID variable or check the sQuote(Use rownames) box")
+			return("Please specify a subject ID variable or check the \"Use Rownames\" box")
 		return("")
 		}
 

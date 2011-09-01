@@ -26,11 +26,6 @@
 		if(state$x_lab!="") cmd = paste(cmd, ", x_lab = \"",state$x_lab,"\"\n",sep="")
 		if(state$y_lab!="") cmd = paste(cmd, ", y_lab = \"",state$y_lab,"\"\n",sep="")
 		if(state$split_lab!="") cmd = paste(cmd, ", split_lab = \"",state$split_lab,"\"\n",sep="")
-#		if(any(grepl("Tukey", state$Options))) {
-#			cmd = paste(cmd,", posthoc = TRUE\n",sep="")
-#			}
-# Note: Tukey results don't seem to be returning correct t-values as compared to t.test.
-		if(!is.null(state$newID)) cmd = paste(cmd, ", newID = TRUE\n",sep="")
 		if(!is.null(state$test.factor)) {
 			cmd = paste(cmd, ", test.var = .(",state$test.factor,")\n",sep="")
 			if(!is.null(state$at.factor)) cmd = paste(cmd, ", at.var = .(",state$at.factor,")\n",sep="")
