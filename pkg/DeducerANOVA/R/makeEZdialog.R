@@ -91,8 +91,16 @@ makeEZDialog <- function() {
 			SMEb <- new(JButton,"Simple Main Effects")
 					SMEfunction <- function(cmd,ActionEvent) {
 						SMEdialog$setLocationRelativeTo(SMEb)
+						vrd <- varSelector$getModel()
+						vd <- variableSelector$getModel()
+						if(vrd==vd){
+							SMEdialog$run()                            
+						}else{
+						SMEdialog$reset()
+						varSelector$setModel(variableSelector$getModel())
 						SMEdialog$run()
 						}
+					}
 					SMElistener <- new(ActionListener)
 					SMElistener$setFunction(toJava(SMEfunction))
 					SMEb$addActionListener(SMElistener)
