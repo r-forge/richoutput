@@ -108,7 +108,17 @@ makeEZDialog <- function() {
 		#Listen for the plot button to be pressed
 		plotFunction <- function(cmd,ActionEvent){
 			plotEZ$setLocationRelativeTo(plotButton)
-			plotEZ$run()
+            pd <- plotVariableSelector$getModel()
+            vd <- variableSelector$getModel()
+            if(pd==vd){
+            	plotEZ$run()                            
+            }else{
+                plotEZ$reset()
+                plotVariableSelector$setModel(variableSelector$getModel())
+                plotEZ$run()    
+                        } 
+#			plotEZ$setLocationRelativeTo(plotButton)
+#			plotEZ$run()
 		}
 		plotListener <- new(ActionListener)
 		plotListener$setFunction(toJava(plotFunction))
