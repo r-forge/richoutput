@@ -83,23 +83,9 @@ DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL,
 	if(!is.null(x)) {
 		gg2way(data = data.name, exclude = excluded, x = as.character(x), y = as.character(dv), xwithin = xwithin, split = as.character(split), 
 			x_lab = x_lab, y_lab = y_lab, split_lab = split_lab)
-		#ti = paste("[plot] ",as.character(dv), " ~ ", as.character(x), if(!is.null(split)) paste(" by ",as.character(split),sep=""),sep="")
-#		elem <- record$getActiveElement()
-#		elem$setTitle(ti)
 		}
-
-
-
-
-# Setting the title of the output element
-	ti = paste("[ANOVA] ",as.character(dv), " ~ ", if(!is.null(between)) paste("btw(",paste(as.character(between),collapse="*"),")",sep=""), 
-		if(!is.null(within)) paste("w/in(",paste(as.character(within),collapse="*"),")",sep=""),sep="")
-	record <- J("RichOutput.OutputController")$record
-	elem <- record$getActiveElement()
-	elem$setTitle(ti)
-
-	
 	}
+
 
 	.ezAnalysisCheckFunction <- function(state){		
 		#make sure at least one dv and one factor are selected
