@@ -7,6 +7,11 @@ makeEZDialog <- function() {
 		variableSelector <- new(VariableSelectorWidget)
 		variableSelector$setTitle("data")
 		addComponent(ezDialog,variableSelector, 10, 420, 820, 10)
+
+		#add a listener for the Run button in meltDialog, and refresh the data if anything is heard
+		if(exists(".meltDialog")) {
+			
+			}
 		
 		#add a list for a dependent variable
 		dvList<- new(SingleVariableWidget,"Dependent Variable",variableSelector)
@@ -188,13 +193,23 @@ makeEZDialog <- function() {
 		addComponent(ezDialog,reshape.button,890,295,940,75)
 		setSize(reshape.button,220L,50L)
 		
+			#Listen for the button to be pressed
+			ReshapeFunction <- function(cmd,ActionEvent){
+				getMeltDialog()$run()
+				}
+			ReshapeListener <- new(ActionListener)
+			ReshapeListener$setFunction(toJava(ReshapeFunction))
+			reshape.button$addActionListener(ReshapeListener)
+
+		#Add a 'Refresh Data Names' button
+		refresh.button <- new(JButton,"Refresh Data Names")
+		addComponent(ezDialog,refresh.button,950,345,990,25)
+		
 		#Listen for the button to be pressed
-		ReshapeFunction <- function(cmd,ActionEvent){
-			getMeltDialog()$run()
-		}
-		ReshapeListener <- new(ActionListener)
-		ReshapeListener$setFunction(toJava(ReshapeFunction))
-		reshape.button$addActionListener(ReshapeListener)
+			refreshFunction <- function(cmd,ActionEvent) variableSelector$refreshDataNames()
+			refreshListener <- new(ActionListener)
+			refreshListener$setFunction(toJava(refreshFunction))
+			refresh.button$addActionListener(refreshListener)
 
 		#Add a 'Create New Subject ID' checkbox
 		newID <- new(CheckBoxesWidget,c("Use rownames for Subject ID","box 2"))

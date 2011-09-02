@@ -97,6 +97,10 @@ DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL,
 #		make sure subject ID is specified
 		if(is.null(state$wid) & is.null(state$newID))
 			return("Please specify a subject ID variable or check the \"Use Rownames\" box")
+		if(state$SMEdata!=state$data)
+			return("Data selected for simple main effects does not match data selected for ANOVA")
+		if(state$plotData!=state$data)
+			return("Data selected for plot does not match data selected for ANOVA")
 		return("")
 		}
 
