@@ -57,20 +57,7 @@ DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL,
 				)
 			to_return$'Descriptive Statistics' <- descrip
 			}
-	
-			#withConditions(ezStats( 
-#			    data = data
-#			    , dv = dv
-#			    , wid = wid
-#			    , within = within
-#			    , between = between # or could be a subset of between
-#			    , between_full = between
-#			    , diff = NULL
-#			    , reverse_diff = FALSE
-#				)
-#			)
-#		}
-#
+
 # Simple Main Effects
 	if(!is.null(test.var) & !is.null(at.var)) {
 		is.within <- test.var %in% within
