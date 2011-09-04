@@ -1,7 +1,7 @@
 makeMeltDialog <- function() {
 		meltDialog <- new(SimpleRDialog)
 		meltDialog$setSize(520L,600L)
-		meltDialog$setTitle("Reshape Data")
+		meltDialog$setTitle("Reshape Data: Wide --> Long")
 		
 		#add variable selector
 		variableSelector <- new(VariableSelectorWidget)
@@ -10,7 +10,7 @@ makeMeltDialog <- function() {
 		
 		#add text field to enter name of melted data
 		JLabel <- J("javax.swing.JLabel")
-		nameLabel <- new(JLabel,"Name of new dataset:")
+		nameLabel <- new(JLabel,"Data name:")
 		nameText <- new(TextFieldWidget)
 		nameText$setTitle("newDataName")
 		addComponent(meltDialog, nameLabel, 30, 700, 70, 490)
@@ -30,14 +30,14 @@ makeMeltDialog <- function() {
 
 		#add text field to enter name of variable to store original variable names
 		JLabel <- J("javax.swing.JLabel")
-		nameLabel <- new(JLabel,"Name for within-Ss factor:")
+		nameLabel <- new(JLabel,"Within variable name:")
 		nameText <- new(TextFieldWidget)
 		nameText$setTitle("variable_name")
 		addComponent(meltDialog, nameLabel, 560, 780, 600, 490)
 		addComponent(meltDialog, nameText, 560, 990, 600, 790)
 		
 		#add text field to enter name of DV, default is "value"
-		dvLabel <- new(JLabel,"Name for DV:")
+		dvLabel <- new(JLabel,"DV name:")
 		dvText <- new(TextFieldWidget)
 		dvText$setTitle("dvname")
 		addComponent(meltDialog, dvLabel, 610, 780, 650, 490)

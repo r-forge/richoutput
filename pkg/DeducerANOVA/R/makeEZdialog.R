@@ -24,14 +24,14 @@ makeEZDialog <- function() {
 		addComponent(ezDialog, betweenList, 120, 990, 310, 490)
 
 		#add a list for the observed (not manipulated) variables
-		observedList<- new(VariableListWidget,"Observed (not manipulated) Factors",variableSelector)
+		observedList<- new(VariableListWidget,"Observed Factors",variableSelector)
 		observedList$setTitle("observed")
 		addComponent(ezDialog, observedList, 320, 990, 520, 490)
 
 		#add a list for a subject variable
 		subjList<- new(SingleVariableWidget,"Subject ID",variableSelector)
 		subjList$setTitle("wid")
-		addComponent(ezDialog, subjList, 740, 990, 840, 530)
+		addComponent(ezDialog, subjList, 740, 990, 840, 490)
 
 		#add a list for within-subjects variables
 		withinList<- new(VariableListWidget,"Within-Subjects Factors",variableSelector)
@@ -166,7 +166,7 @@ makeEZDialog <- function() {
 
 			#add text field to enter new x-axis label
 			textTop = textTop + listHeight + 3 * buffer
-			xLabel <- new(JLabel,"New label for x-axis:")
+			xLabel <- new(JLabel,"X-axis label:")
 			xValue <- new(TextFieldWidget)
 			xValue$setTitle("x_lab")
 			addComponent(plotEZ, xLabel, textTop, textLeft - 10, textTop + textHeight, textLeft - 210)
@@ -174,7 +174,7 @@ makeEZDialog <- function() {
 			
 			#add text field to enter new y-axis label
 			textTop = textTop + textHeight + buffer; 
-			yLabel <- new(JLabel,"New label for y-axis:")
+			yLabel <- new(JLabel,"Y-axis label:")
 			yValue <- new(TextFieldWidget)
 			yValue$setTitle("y_lab")
 			addComponent(plotEZ, yLabel, textTop, textLeft - 10, textTop + textHeight, textLeft - 210)
@@ -182,7 +182,7 @@ makeEZDialog <- function() {
 			
 			#add text field to enter new legend label
 			textTop = textTop + textHeight + buffer; 
-			splitLabel <- new(JLabel,"New label for legend:")
+			splitLabel <- new(JLabel,"legend label:")
 			splitValue <- new(TextFieldWidget)
 			splitValue$setTitle("split_lab")
 			addComponent(plotEZ, splitLabel, textTop, textLeft - 10, textTop + textHeight, textLeft - 210)
@@ -206,7 +206,10 @@ makeEZDialog <- function() {
 		addComponent(ezDialog,refresh.button,950,345,990,25)
 		
 		#Listen for the button to be pressed
-			refreshFunction <- function(cmd,ActionEvent) variableSelector$refreshDataNames()
+			refreshFunction <- function(cmd,ActionEvent){
+				variableSelector$refreshDataNames()
+				plotVariableSelector$refreshDataNames()
+			}
 			refreshListener <- new(ActionListener)
 			refreshListener$setFunction(toJava(refreshFunction))
 			refresh.button$addActionListener(refreshListener)
