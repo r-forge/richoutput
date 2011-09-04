@@ -1,5 +1,4 @@
 .First.lib <- function(libname, pkgname) {
-	require(ez)
 	require(reshape)
 	.jpackage(pkgname, lib.loc = libname)
 		deducer.addMenuItem("ANOVA",,"getEZAnalysisDialog()$run()","Analysis")
