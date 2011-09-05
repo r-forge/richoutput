@@ -69,7 +69,7 @@ One of the character vector values of p.adjust.method. See help(p.adjust) for ac
 }
 \value{
 Returns a list of data.frames.  
-\item{Model Details}{ a summary of the model details.}
+\item{Model Details}{A summary of the model details.}
 \item{ANOVA}{The second is the results of the ANOVA, including SS if they are requested in sQuote(detailed).}
 \item{Levene's test}{The third can be Levene's test for equality of variances if there are only between-subjects factors.}
 \item{Descriptives}{If they are requested, the last item is descriptive statistics: N, mean, SD.}
@@ -82,5 +82,5 @@ Bakeman, R. (2005). Recommended effect size statistics for repeated measures des
 Bill Altermatt
 }
 \seealso{
-\code{\link{ez::ezANOVA}}, \code{\link{sme}} 
+\code{\link{sme)}}
 }
