@@ -206,10 +206,11 @@ makeEZDialog <- function() {
 		addComponent(ezDialog,refresh.button,950,345,990,25)
 		
 		#Listen for the button to be pressed
-			refreshFunction <- function(cmd,ActionEvent){
+			refreshFunction <- function(cmd,ActionEvent) {
 				variableSelector$refreshDataNames()
-				plotVariableSelector$refreshDataNames()
-			}
+				if(exists("plotVariableSelector") plotVariableSelector$refreshDataNames()
+				if(exists("varSelector") varSelector$refreshDataNames()
+				}
 			refreshListener <- new(ActionListener)
 			refreshListener$setFunction(toJava(refreshFunction))
 			refresh.button$addActionListener(refreshListener)
