@@ -3,7 +3,7 @@
 
 DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL, 
 	within = NULL, type = 3, detailed = FALSE, descriptives = FALSE, 
-	x = NULL, split = NULL, x_lab = NULL, y_lab = NULL, split_lab = NULL, 
+	Tukey = FALSE, x = NULL, split = NULL, x_lab = NULL, y_lab = NULL, split_lab = NULL, 
 #	posthoc = FALSE,   Note: Cutting Tukey results b/c don't seem correct.
 	test.var = NULL, at.var = NULL, var.equal = FALSE,
 	p.adjust.method = "holm") 
@@ -59,9 +59,17 @@ DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL,
 			}
 
 # Simple Main Effects
-	if(!is.null(test.var) & !is.null(at.var)) {
+	if(!is.null(test.var)) {
 		is.within <- test.var %in% within
-		to_return$'Tests of Simple Main Effects' <- sme(data,dv,test.var,is.within,at.var,var.equal,p.adjust.method)
+		to_return$'Pairwise Comparisons' <- sme(data,dv,test.var,is.within,at.var,var.equal,p.adjust.method)
+		}
+	if(Tukey) {
+		y <- data[,match(dv,names(data))]
+		btw <- data[,match(between,names(data))]
+		fmla <- as.formula(paste(as.character(dv),"~", paste(as.character(between), collapse= "*")))
+		thsd <- TukeyHSD(aov(lm(fmla,data=data)))
+		names(thsd) <- paste("TukeyHSD:",names(thsd))
+		to_return <- c(to_return,thsd)
 		}
 	
 	class(to_return) = "ez"

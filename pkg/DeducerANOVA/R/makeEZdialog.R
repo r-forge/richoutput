@@ -59,8 +59,8 @@ makeEZDialog <- function() {
 			setSize(subEZ,350,350)
 			optionEZ <- new(CheckBoxesWidget,"Options",c("Type II SS (default is Type III)",
 				"Detailed output (SS, LR, AIC, etc.)", 
-				"Descriptive statistics"))
-#				,"Tukey pairwise comparisons")
+				"Descriptive statistics",
+				"Tukey HSD (Btw-Ss only)"))
 			addComponent(subEZ, optionEZ, 10, 990, 700, 10)
 
 		SMEdialog <- new(SimpleRSubDialog,ezDialog,"Simple Main Effects")
@@ -208,8 +208,8 @@ makeEZDialog <- function() {
 		#Listen for the button to be pressed
 			refreshFunction <- function(cmd,ActionEvent) {
 				variableSelector$refreshDataNames()
-				if(exists("plotVariableSelector") plotVariableSelector$refreshDataNames()
-				if(exists("varSelector") varSelector$refreshDataNames()
+				if(exists("plotVariableSelector")) plotVariableSelector$refreshDataNames()
+				if(exists("varSelector")) varSelector$refreshDataNames()
 				}
 			refreshListener <- new(ActionListener)
 			refreshListener$setFunction(toJava(refreshFunction))

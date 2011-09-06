@@ -20,6 +20,9 @@
 		if(any(grepl("Descriptive", state$Options))) {	
 			cmd = paste(cmd, ", descriptives = TRUE\n",sep="")
 			}			
+		if(any(grepl("Tukey", state$Options))) {	
+			cmd = paste(cmd, ", Tukey = TRUE\n",sep="")
+			}			
 		if(!is.null(state$x)) cmd = paste(cmd, ", x = .(",state$x,")\n",sep="")
 		if(!is.null(state$split)) cmd = paste(cmd, ", split = .(",state$split,")\n",sep="")
 
