@@ -26,5 +26,4 @@ Bill Altermatt
 
 \seealso{
 \code{\link{alpha.item}}, \code{\link{newMean}}, \code{\link{revData}}, 
-\code{\link{.meanRunFunction}}
 }

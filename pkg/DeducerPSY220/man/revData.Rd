@@ -7,7 +7,7 @@ Reverse-score data
 Given a dataset with some variables designated for reverse-scoring and a maximum value for those variables, this function returns a list that includes the dataset with those variables reverse-scored.
 }
 \usage{
-revData(data, variables = NULL, reversed = NULL, max = NULL, saveReversed = FALSE)
+revData(data, variables = NULL, reversed = NULL, max = NULL)
 }
 \arguments{
   \item{data}{

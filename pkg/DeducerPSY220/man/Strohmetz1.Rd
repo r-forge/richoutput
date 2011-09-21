@@ -14,12 +14,11 @@ Simulated data using the means and standard deviations reported from Strohmetz e
     \item{\code{Condition}}{a character vector indicating whether the dining party received chocolate 
 with their bill or whether they received no chocolate.}
     \item{\code{Tip_Percentage}}{a numeric vector equal to the gratuity divided by the pre-tax bill, 
-multiplied by 100. So, a 17 corresponds to a 17% tip.}
+multiplied by 100. So, a 17 corresponds to a 17 percent tip.}
   }
 }
 \details{
-From the article:
-Participants. Participants were 92 dining parties (individual party sizes were not recorded) at a 
+From the article: Participants. Participants were 92 dining parties (individual party sizes were not recorded) at a 
 restaurant in downtown Ithaca, New York. The restaurant seats approximately 66 people and provided
 a full dinner menu, including alcohol and a casual dinner atmosphere.
 Procedure. The experiment was conducted over two weekday and two weekend dinner shifts during the
@@ -42,4 +41,3 @@ Strohmetz, D. B., Rind, B., Fisher, R., & Lynn, M. (2002). Sweetening the till: 
 to increase restaurant tipping. Journal of Applied Social Psychology, 32, 2, 300-309.
 }
 
-\keyword{datasets}

@@ -14,9 +14,6 @@ alpha.item(dat)
 A data.frame.
 }
 }
-\details{
-
-}
 \value{
 A character vector of HTML code that reports Cronbach's alpha for the set of items and a table with the following information for each item:
 \item{alpha}{Cronbach's alpha of the scale with that item removed

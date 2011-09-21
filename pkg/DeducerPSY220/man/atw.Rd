@@ -19,7 +19,7 @@ Responses by 201 undergraduates at the University of Illinois at Urbana-Champaig
     \item{\code{atw05}}{The intellectual leadership of a community should be largely in the hands of men.}
     \item{\code{atw06}}{Under modern economic conditions with women active outside the home, men should share in household tasks such as washing dishes and doing laundry.}
     \item{\code{atw07}}{Sons in a family should be given more encouragement to go to college than daughters.}
-    \item{\code{atw08}}{It is insulting to women to have the “obey” clause still in the marriage service.}
+    \item{\code{atw08}}{It is insulting to women to have the "obey" clause still in the marriage service.}
     \item{\code{atw09}}{Swearing and obscenity are more repulsive in the speech of a woman than a man.}
     \item{\code{atw10}}{In general, the father should have greater authority than the mother in the bringing up of children.}
     \item{\code{atw11}}{Economic and social freedom is worth far more to women than acceptance of the ideal of femininity, which has been set up by men.}

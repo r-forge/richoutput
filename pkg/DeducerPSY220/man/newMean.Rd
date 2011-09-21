@@ -28,9 +28,6 @@ The maximum possible value for \code{reversed}. If the variables in \code{revers
 Name to be given to the new mean variable.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
 A named column vector equal to the mean of a combination of \code{variables} and
 \code{reversed} after the latter have been reverse-scored.
@@ -40,5 +37,5 @@ Bill Altermatt
 }
 
 \seealso{
-\code{\link{.meanRunFunction}}, \code{\link{revData}}, \code{\link{apply}}
+\code{\link{revData}}, \code{\link{apply}}
 }
