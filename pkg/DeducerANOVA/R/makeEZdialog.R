@@ -8,11 +8,7 @@ makeEZDialog <- function() {
 		variableSelector$setTitle("data")
 		addComponent(ezDialog,variableSelector, 10, 420, 820, 10)
 
-		#add a listener for the Run button in meltDialog, and refresh the data if anything is heard
-		if(exists(".meltDialog")) {
-			
-			}
-		
+	
 		#add a list for a dependent variable
 		dvList<- new(SingleVariableWidget,"Dependent Variable",variableSelector)
 		dvList$setTitle("dv")

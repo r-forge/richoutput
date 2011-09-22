@@ -21,11 +21,11 @@ sme <- function(data,dv, test.var, is.within=FALSE, at.var=NULL, var.equal=FALSE
 	names(c.df) <- c(if(!is.null(at.var)) as.character(at.var),"i","j")
 	tv = as.character(tv)
 	if(!is.null(at.var)) {
-		tfun <- function(i,j,k) t.test(y[tv==i & av==k],y[tv==j & av==k],paired=is.within,var.equal=var.equal)
-		tmat <- mapply(tfun,c.df$i,c.df$j,c.df[[as.character(at.var)]])
+		tfun3 <- function(i,j,k) t.test(y[tv==i & av==k],y[tv==j & av==k],paired=is.within,var.equal=var.equal)
+		tmat <- mapply(tfun3,c.df$i,c.df$j,c.df[[as.character(at.var)]])
 		} else{
-			tfun <- function(i,j) t.test(y[tv==i],y[tv==j],paired=is.within,var.equal=var.equal)
-			tmat <- mapply(tfun,c.df$i,c.df$j)
+			tfun2 <- function(i,j) t.test(y[tv==i],y[tv==j],paired=is.within,var.equal=var.equal)
+			tmat <- mapply(tfun2,c.df$i,c.df$j)
 			}
 	c.df$t <- tmat[1,]
 	c.df$df <- tmat[2,]

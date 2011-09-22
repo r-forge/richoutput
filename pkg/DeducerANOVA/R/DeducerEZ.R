@@ -4,7 +4,6 @@
 DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL, 
 	within = NULL, type = 3, detailed = FALSE, descriptives = FALSE, 
 	Tukey = FALSE, x = NULL, split = NULL, x_lab = NULL, y_lab = NULL, split_lab = NULL, 
-#	posthoc = FALSE,   Note: Cutting Tukey results b/c don't seem correct.
 	test.var = NULL, at.var = NULL, var.equal = FALSE,
 	p.adjust.method = "holm") 
 	{
@@ -76,18 +75,12 @@ DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL,
 	
 	print(to_return)
 
-# Tukey Post Hoc tests for between-subjects factors
-#	if(posthoc) {
-#		print(summary(ANOVAposthoc(data,dv,between)))
-#		}
-#
-
 # plot
 	# If any rows were cut, pass the row numbers along to ggplot in 'excluded'
 		if(!is.null(attr(data,"na.action"))) excluded = paste(attr(data,"na.action"),collapse=",") else excluded = NULL
 	# Is the x-axis variable a within-subjects variable?  If yes, ggplot will connect the points with a line.
 		xwithin = FALSE
-		if(!is.null(within)) if(as.character(x) %in% as.character(within)) xwithin = TRUE
+		if(!is.null(within) & !is.null(x)) if(as.character(x) %in% as.character(within)) xwithin = TRUE
 	if(!is.null(x)) {
 		gg2way(data = data.name, exclude = excluded, x = as.character(x), y = as.character(dv), xwithin = xwithin, split = as.character(split), 
 			x_lab = x_lab, y_lab = y_lab, split_lab = split_lab)

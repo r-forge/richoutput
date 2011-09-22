@@ -9,7 +9,7 @@ including within-subjects and mixed designs. Includes functions for
 reshaping within-subjects data from wide to long format.
 }
 \usage{
-DeducerEZ(data, dv, wid, between = NULL, observed = NULL, within = NULL, type = 3, detailed = FALSE, descriptives = FALSE, x = NULL, split = NULL, x_lab = NULL, y_lab = NULL, split_lab = NULL, test.var = NULL, at.var = NULL, var.equal = FALSE, p.adjust.method = "holm")
+DeducerEZ(data, dv, wid, between = NULL, observed = NULL, within = NULL, type = 3, detailed = FALSE, descriptives = FALSE, Tukey = FALSE, x = NULL, split = NULL, x_lab = NULL, y_lab = NULL, split_lab = NULL, test.var = NULL, at.var = NULL, var.equal = FALSE, p.adjust.method = "holm")
 }
 \arguments{
   \item{data}{
@@ -38,6 +38,9 @@ Logical.  Should detailed output, including Sum of Squares for each factor, be p
 }
   \item{descriptives}{
 Logical.  Should descriptive statistics for the model be provided? Default is FALSE.
+}
+  \item{Tukey}{
+Logical.  If true, Tukey's Honestly Significant Difference for all possible pairs is computed on all between-subjects factors and interactions of between-subjects factors. This is accomplished by first constructing a linear model by crossing all between-subjects factors, calling aov on the lm, and then calling TukeyHSD on the aov.
 }
   \item{x}{
 Variable to be plotted along the x-axis.  If blank, no plot is generated.
