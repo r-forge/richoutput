@@ -22,17 +22,22 @@
 		if(any(grepl("Tukey", state$Options))) {	
 			cmd = paste(cmd, ", Tukey = TRUE\n",sep="")
 			}			
-		if(!is.null(state$x)) cmd = paste(cmd, ", x = .(",state$x,")\n",sep="")
-		if(!is.null(state$split)) cmd = paste(cmd, ", split = .(",state$split,")\n",sep="")
-
-		if(state$x_lab!="") cmd = paste(cmd, ", x_lab = \"",state$x_lab,"\"\n",sep="")
-		if(state$y_lab!="") cmd = paste(cmd, ", y_lab = \"",state$y_lab,"\"\n",sep="")
-		if(state$split_lab!="") cmd = paste(cmd, ", split_lab = \"",state$split_lab,"\"\n",sep="")
-		if(!is.null(state$test.factor)) {
-			cmd = paste(cmd, ", test.var = .(",state$test.factor,")\n",sep="")
-			if(!is.null(state$at.factor)) cmd = paste(cmd, ", at.var = .(",state$at.factor,")\n",sep="")
-			cmd = paste(cmd,", var.equal = ",if(any(grepl("Equal", state$var.equal))) "TRUE\n" else "FALSE\n",sep="")
-			cmd = paste(cmd,", p.adjust.method = \"",state$'p-value adjustment method',"\"\n",sep="")
+	# Plotting
+		if(state$plotData==state$data) {
+			if(!is.null(state$x)) cmd = paste(cmd, ", x = .(",state$x,")\n",sep="")
+			if(!is.null(state$split)) cmd = paste(cmd, ", split = .(",state$split,")\n",sep="")
+			if(state$x_lab!="") cmd = paste(cmd, ", x_lab = \"",state$x_lab,"\"\n",sep="")
+			if(state$y_lab!="") cmd = paste(cmd, ", y_lab = \"",state$y_lab,"\"\n",sep="")
+			if(state$split_lab!="") cmd = paste(cmd, ", split_lab = \"",state$split_lab,"\"\n",sep="")
+			}
+	# Simple Main Effects
+		if(state$SMEdata==state$data) {
+			if(!is.null(state$test.factor)) {
+				cmd = paste(cmd, ", test.var = .(",state$test.factor,")\n",sep="")
+				if(!is.null(state$at.factor)) cmd = paste(cmd, ", at.var = .(",state$at.factor,")\n",sep="")
+				cmd = paste(cmd,", var.equal = ",if(any(grepl("Equal", state$var.equal))) "TRUE\n" else "FALSE\n",sep="")
+				cmd = paste(cmd,", p.adjust.method = \"",state$'p-value adjustment method',"\"\n",sep="")
+				}
 			}
 		cmd = paste(cmd,")",sep="")
 		if(is.null(state$wid)) cmd = paste(state$data,"$New.Subject.ID <- rownames(",state$data,")\n",cmd,sep="")

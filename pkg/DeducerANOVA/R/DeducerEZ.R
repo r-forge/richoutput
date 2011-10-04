@@ -44,14 +44,15 @@ DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL,
 	if (!is.null(attr(results,"warnings")))	attr(to_return$ANOVA,"warnings") <- attr(results,"warnings")
 
 	if(descriptives) {
-		 # code borrowed from ezStats
 			temp = idata.frame(cbind(data,ezDV = data[,names(data) == as.character(dv)]))
 			descrip <- ddply(temp,structure(as.list(c(between,within)),class = 'quoted')
 				,function(x){
 					N = length(x$ezDV)
 					Mean = mean(x$ezDV)
 					SD = sd(x$ezDV)
-					return(c(N = N, Mean = Mean, SD = SD))
+					LL = Mean-(qt(0.975,N)*SD/sqrt(N))
+					UL = Mean+(qt(0.975,N)*SD/sqrt(N))
+					return(c(N = N, Mean = Mean, SD = SD, "95%CI LL" = LL, "95%CI UL" = UL))
 					}
 				)
 			to_return$'Descriptive Statistics' <- descrip
@@ -98,10 +99,10 @@ DeducerEZ <- function(data, dv, wid, between = NULL, observed = NULL,
 #		make sure subject ID is specified
 		if(is.null(state$wid) & is.null(state$newID))
 			return("Please specify a subject ID variable or check the \"Use Rownames\" box")
-		if(state$SMEdata!=state$data)
-			return("Data selected for simple main effects does not match data selected for ANOVA")
-		if(state$plotData!=state$data)
-			return("Data selected for plot does not match data selected for ANOVA")
+#		if(state$SMEdata!=state$data)
+#			return("Data selected for simple main effects does not match data selected for ANOVA")
+#		if(state$plotData!=state$data)
+#			return("Data selected for plot does not match data selected for ANOVA")
 		return("")
 		}
 
