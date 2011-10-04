@@ -1,6 +1,6 @@
 Package: DeducerANOVA
-Version: 0.1
-Date: 2011-08-25
+Version: 0.2
+Date: 2011-10-04
 Title: Factorial ANOVA for Deducer
 Author: Bill Altermatt
 Maintainer: Bill Altermatt <altermattw@hanover.edu>
