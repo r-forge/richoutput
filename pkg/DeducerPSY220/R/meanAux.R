@@ -11,6 +11,7 @@
 		#make sure label for new mean is entered
 		if(state$label == "")
 			return("Please enter label for new mean")
+		if(regexpr("[[:space:]]",state$label) > 0) return("No spaces in label for new mean")
 		return("")
 		}
 	
