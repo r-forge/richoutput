@@ -19,7 +19,7 @@
 		if(any(grepl("Descriptive", state$Options))) {	
 			cmd = paste(cmd, ", descriptives = TRUE\n",sep="")
 			}			
-		if(any(grepl("Tukey", state$Options))) {	
+		if(any(grepl("Tukey", state$Options)) & !is.null(state$between)) {	
 			cmd = paste(cmd, ", Tukey = TRUE\n",sep="")
 			}			
 	# Plotting
