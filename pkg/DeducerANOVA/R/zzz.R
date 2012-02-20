@@ -3,6 +3,7 @@
 		return(NULL)
 	require(reshape)
 	require(stringr)
+	require(Hmisc)
 	.jpackage(pkgname, lib.loc = libname)
 		deducer.addMenuItem("ANOVA",,"getEZAnalysisDialog()$run()","Analysis")
 		deducer.addMenuItem("Reshape Data",,"getMeltDialog()$run()","Data")
