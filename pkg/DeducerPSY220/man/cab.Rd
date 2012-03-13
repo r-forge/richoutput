@@ -59,7 +59,7 @@ Violent) completely within-subjects design.
 
 \examples{
 data(cab)
-
+library(reshape)
 cab2 <- melt(data = cab
 , measure.vars = c("PC", "PA", "PH", "DC", "DA", "DH", "VC", "VA", "VH"),
 , variable_name = "cond"
