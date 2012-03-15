@@ -51,7 +51,7 @@ makeMedDialog <- function() {
 		label.list <- c(label.a,label.b,label.t,label.t.prime,label.ab)
 		estimates <- sapply(results[1:5,1], function(x) as.numeric(x))
 		estimates.f <- format(estimates,nsmall=2,digits=3)
-		t.values <- sapply(results[1:5,3], function(x) as.numeric(x))
+		t.values <- sapply(results[1:5,3], function(x) abs(as.numeric(x)))
 		p.values <- 2*(1-pt(t.values,nrow(tmp.data)))
 		p.values.f <- format.pval(p.values,eps = .001,digits=3)
 		output <- as.data.frame(cbind(label.list,estimates.f,p.values.f))
