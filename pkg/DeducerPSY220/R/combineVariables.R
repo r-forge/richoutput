@@ -122,6 +122,6 @@ makeCVDialog <- function() {
 		return(.CVDialog)
 	}
 
-#	deducer.addMenuItem("Combine Variables",,"getCVDialog()$run()","Data")
-#	if(.windowsGUI) winMenuAddItem("Data", "Combine Variables", "deducer('Combine Variables')")
-#	if(.jgr) jgr.addMenuItem("Data", "Combine Variables", "deducer('Combine Variables')")
+	deducer.addMenuItem("Combine Variables",,"getCVDialog()$run()","Data")
+	if(.windowsGUI) winMenuAddItem("Data", "Combine Variables", "deducer('Combine Variables')")
+	if(.jgr) jgr.addMenuItem("Data", "Combine Variables", "deducer('Combine Variables')")
