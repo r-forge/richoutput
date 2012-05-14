@@ -29,7 +29,7 @@ print_to_html <- function(x,...){
 #print.summary.anova <- function(x,...) print_to_html(x,...)
 
 
-.First.lib <- function(libname, pkgname) { 
+.onLoad <- function(libname, pkgname) { 
 	#loads RichOutput.jar
 	.jpackage(pkgname,lib.loc=libname)
 	
