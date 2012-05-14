@@ -1,0 +1,18 @@
+S3method(print, Anova)
+S3method(print, confint.glht)
+S3method(print, contin.table)
+S3method(print, contin.tests)
+S3method(print, contingency.tables)
+S3method(print, cor.matrix)
+S3method(print, eff)
+S3method(print, ez)
+S3method(print, freq.table)
+S3method(print, glht)
+S3method(print, multi.test)
+S3method(print, pairwise.htest)
+S3method(print, summary.eff)
+S3method(print, summary.glht)
+S3method(print, summary.lm)
+
+
+
