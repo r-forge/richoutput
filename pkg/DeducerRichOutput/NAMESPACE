@@ -1,5 +1,6 @@
 import(rJava)
 import(Deducer)
+exportPattern("^[^\\.]")
 S3method(print, Anova)
 S3method(print, confint.glht)
 S3method(print, contin.table)
