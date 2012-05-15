@@ -1,1 +1,3 @@
-exportPattern("^[[:alpha:]]+")
+import(rJava)
+import(Deducer)
+exportPattern("^[^\\.]")
