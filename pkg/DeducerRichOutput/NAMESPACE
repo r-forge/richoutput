@@ -1,3 +1,5 @@
+import(rJava)
+import(Deducer)
 S3method(print, Anova)
 S3method(print, confint.glht)
 S3method(print, contin.table)
