@@ -8,10 +8,10 @@ Prints objects of class contingency.tables for HTML display
 Over-rides the print.contingency.tables function in package Deducer to render contingency.tables objects in HTML
 }
 \usage{
-\method{print}{contingency.tables}(tables, digits = 3, prop.r = TRUE, prop.c = TRUE, prop.t = TRUE, expected.n = FALSE, no.tables = FALSE, ...)
+\method{print}{contingency.tables}(x, digits = 3, prop.r = TRUE, prop.c = TRUE, prop.t = FALSE, expected.n = FALSE, no.tables = FALSE, ...)
 }
 \arguments{
-  \item{tables}{
+  \item{x}{
 Object of class \dQuote{contingency.tables}
 }
   \item{digits}{

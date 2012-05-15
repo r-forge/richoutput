@@ -24,6 +24,4 @@ The evaluated expression, with any warnings attached to the value as attributes.
 \author{
 Bill Altermatt
 }
-\examples{
-withConditions({a=4;warning("yikes!");warning("yikes!");a=a+1;a})
-}
+

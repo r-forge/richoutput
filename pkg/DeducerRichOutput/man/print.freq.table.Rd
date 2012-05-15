@@ -8,11 +8,14 @@ Print frequency tables in HTML
 Over-rides the print.freq.table function in package Deducer to format output for HTML
 }
 \usage{
-\method{print}{freq.table}(x)
+\method{print}{freq.table}(x, ...)
 }
 \arguments{
   \item{x}{
 An object of class \dQuote{freq.table}, such as that produced by \code{frequencies} in package Deducer.
+}
+  \item{\dots}{
+Additional commands to be passed to the print method.
 }
 }
 

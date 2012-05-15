@@ -8,7 +8,7 @@ Print object of class contin.table in HTML
 Over-rides the print.contin.table function in package Deducer to format a contin.table object for HTML display.
 }
 \usage{
-\method{print}{contin.table}(x, digits = 3, prop.r = TRUE, prop.c = TRUE, prop.t = FALSE, expected.n = FALSE, residuals = FALSE, std.residuals = FALSE, adj.residuals = FALSE, no.tables = FALSE, ...)
+\method{print}{contin.table}(x, digits = 3, prop.r = TRUE, prop.c = TRUE, prop.t = FALSE, expected.n = FALSE, residuals = FALSE, std.residuals = FALSE, adj.residuals = FALSE, no.tables = FALSE, strata.name, table.name, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -41,6 +41,12 @@ Logical indicating whether adjusted residuals should be displayed in each cell.
 }
   \item{no.tables}{
 Logical indicating that no contingency table should be printed.
+}
+  \item{strata.name}{
+Character vector indicating name of stratification variable
+}
+  \item{table.name}{
+Character vector indicating the unique combination of row and column variables.
 }
   \item{\dots}{
 Additional commands passed to print function.
