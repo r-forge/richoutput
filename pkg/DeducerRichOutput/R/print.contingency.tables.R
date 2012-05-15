@@ -1,9 +1,10 @@
-print.contingency.tables <- function (tables, digits = 3, prop.r = TRUE, prop.c = TRUE, prop.t = TRUE, 
+print.contingency.tables <- function (x, digits = 3, prop.r = TRUE, prop.c = TRUE, prop.t = FALSE, 
     expected.n = FALSE, no.tables = FALSE, ...) 
 {
-    for (i in 1:length(tables)) {
-        print(tables[[i]], digits, prop.r, prop.c, prop.t, expected.n, 
-            no.tables = no.tables, ...)
+	if(!is.null(attr(x,"strata.name"))) strataName <- attr(x,"strata.name")
+ 	for (i in 1:length(x)) {
+		tableName <- names(x)[[i]]
+        print(x[[i]], digits, prop.r, prop.c, prop.t, expected.n, 
+            no.tables = no.tables, strata.name = strataName, table.name = tableName, ...)
     }
-	
 }

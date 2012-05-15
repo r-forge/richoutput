@@ -1,18 +1,19 @@
-print.contin.tests <- function (tests, test.digits = 3, ...)
+print.contin.tests <- function (x, digits = 3, table.name, strata.name = NULL, ...)
 {
+#	arguments <- as.list(match.call()[-1])
+#	if(!is.null(arguments$strata.name)) strata.name <- arguments$strata.name
+#	if(!is.null(arguments$table.name)) table.name <- arguments$table.name
+#	if(!is.null(arguments$digits)) test.digits <- digits else test.digits = 3
+	test.digits = digits
+	tests <- x
 	matrix.list <- contin.tests.to.table(tests, test.digits, ...)
 	code = "</pre><H1>Contingency Table Tests</H1>"
 	ncols = dim(matrix.list[[1]])[2]+1
-	table.name = NULL
-	if (!is.null(attr(tests,"strata.name"))) strata.name = attr(tests,"strata.name")
-	if (!is.null(attr(tests,"table"))) {
-		table.name = attr(tests,"table")
-		code = paste(code,"<H3>", 
-			if(!is.null(attr(tests,"cross"))) "Cross-Strata ",
-			"Tests for ",table.name,
-			if(!is.null(attr(tests,"strata.name"))) paste(" across levels of ",strata.name),
-			"</H3>",sep="")
-		}
+	code = paste(code,"<H3>", 
+		 if("Mantel-Haenszel" %in% names(tests)) "Cross-Strata ",
+		"Tests for ",table.name,
+		if(!is.null(strata.name)) paste(" across levels of ",strata.name),
+		"</H3>",sep="")
 	for (strat in 1:length(matrix.list)) { # for each level of strata
 		code = paste(code,"<TABLE cellspacing = -1>",sep="")
 		tab = matrix.list[[strat]]
@@ -68,7 +69,7 @@ print.contin.tests <- function (tests, test.digits = 3, ...)
 	code = paste(code,"<pre>",sep="")
 
 
-if (!is.null(attr(tests,"cross"))) ti = "[cross.strata.tests] " else ti = "[contin.table tests] "
+if("Mantel-Haenszel" %in% names(tests)) ti = "[cross.strata.tests] " else ti = "[contin.table tests] "
 ti = paste(ti,if(!is.null(table.name)) table.name, if(length(matrix.list) > 1) paste(" across ",strata.name))
 results = code
 Rdate = date()

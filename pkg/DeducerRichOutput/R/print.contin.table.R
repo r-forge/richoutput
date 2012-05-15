@@ -1,6 +1,6 @@
 print.contin.table <- function (x, digits = 3, prop.r = TRUE, prop.c = TRUE, prop.t = FALSE, 
     expected.n = FALSE, residuals = FALSE, std.residuals = FALSE, 
-    adj.residuals = FALSE, no.tables = FALSE, ...) 
+    adj.residuals = FALSE, no.tables = FALSE, strata.name, table.name, ...) 
 {
 	# Note: x is the 2nd level of the results of contingency.tables:  results[[i]]
     tab <- x
@@ -9,14 +9,14 @@ print.contin.table <- function (x, digits = 3, prop.r = TRUE, prop.c = TRUE, pro
 	optionRowsN = sum(c(prop.r, prop.c, prop.t, expected.n, residuals, std.residuals, 
 		adj.residuals), na.rm = TRUE)
 	code = "</pre>"
-	if (!is.null(attr(tab,"strata.name"))) strata.name = attr(tab,"strata.name")
-		else strata.name = NULL
+#	if (!is.null(attr(tab,"strata.name"))) strata.name = attr(tab,"strata.name")
+#		else strata.name = NULL
 	RowName <- names(dimnames(tab[[1]]$table))[1] 
     ColName <- names(dimnames(tab[[1]]$table))[2] 
 	if (!no.tables) {
 		code = paste(code,"<H1>Contingency Tables</H1>")
 		code = paste(code,"<H3>", RowName, " by ", ColName,
-			if(!is.null(attr(tab,"strata.name"))) paste(" across levels of ",strata.name),
+			if(!is.null(strata.name)) paste(" across levels of ",strata.name),
 			"</H3>",sep="")   
 		}
     s.tables = sum(sapply(tab, function(x) class(x) == "single.table")) # num of contin.table elements
@@ -143,7 +143,7 @@ print.contin.table <- function (x, digits = 3, prop.r = TRUE, prop.c = TRUE, pro
 	# Now print out any tests that might be present:
 	if (length(tab) > s.tables) {
 		for (t in (s.tables + 1):length(tab)) {
-			print(tab[[t]])
+			print(tab[[t]],digits=digits,strata.name=strata.name,table.name=table.name,...)
 		}
 	}
 }

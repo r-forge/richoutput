@@ -1,4 +1,4 @@
-print.freq.table <- function (x) 
+print.freq.table <- function (x,...) 
 {
 	variables = names(x)
 	code = "</pre><H1>Frequencies</H1>"

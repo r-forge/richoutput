@@ -1,4 +1,5 @@
-print.ez <- function(results) {
+print.ez <- function(x,...) {
+	results <- x
 	code = "</pre>"
 	code = paste(code,"<h1>Analysis of Variance</h1>\n")
 	for(i in 1:length(results)) {
