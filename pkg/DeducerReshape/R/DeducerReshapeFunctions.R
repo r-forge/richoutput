@@ -1,6 +1,6 @@
 reshape.long <- function(data, varying.list, idvar = "id",
 	ids = rownames(data), within.name = "time",
-	within.levels = c("colnames","integers"), drop=NULL){
+	within.levels = c("colnames","integers","letters"), drop=NULL){
 	# If idvar is a column of data with duplicated values,
 	# use a dummy idvar
 	if (idvar %in% names(data) && any(duplicated(data[[idvar]]))){
@@ -15,7 +15,8 @@ reshape.long <- function(data, varying.list, idvar = "id",
 	}
 	within.levels <- switch(within.levels,
 		"colnames" = varying.list[[1L]],
-		"integers" = seq_along(varying.list[[1L]]))
+		"integers" = seq_along(varying.list[[1L]]),
+		"letters" = letters[seq_along(varying.list[[1L]])])
 	# Call reshape
 	long.data <- reshape(data, varying = varying.list,
 		v.names = names(varying.list), idvar = idvar, ids = ids,

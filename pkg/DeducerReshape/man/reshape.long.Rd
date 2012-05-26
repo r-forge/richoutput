@@ -9,7 +9,7 @@ Reshape data frames from wide to long format.
 \usage{
 reshape.long <- function(data, varying.list, idvar = "id",
 	ids = rownames(data), within.name = "time",
-	within.levels = c("colnames","integers"), drop=NULL)
+	within.levels = c("colnames","integers","letters"), drop=NULL)
 }
 \arguments{
   \item{data}{A data frame in wide format.}
@@ -37,7 +37,8 @@ It admits duplicated values in \code{idvar}, and the default values of
 \code{reshape} is defined according to the value of \code{within.levels}:
 \code{"colnames"} means that \code{times} will be the names of the first set of
 variables defined in \code{varying.list}; for \code{"integers"}, they will be a
-sequence of integers (as the default value in \code{reshape}).
+sequence of integers (as the default value in \code{reshape}); for \code{"letters"}
+they will be an alphabetical list starting from \code{"a"} (limited to 26 levels).
 }
 \value{
 Reshaped data frame.
