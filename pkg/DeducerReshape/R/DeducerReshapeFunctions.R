@@ -22,6 +22,7 @@ reshape.long <- function(data, varying.list, idvar = "id",
 		v.names = names(varying.list), idvar = idvar, ids = ids,
 		timevar = within.name, times = within.levels, drop = drop,
 		direction = "long")
+	attr(long.data, "reshapeLong") <- NULL
 	# Move newly created idvar to the first column,
 	# and remove it if adequate
 	nc <- length(long.data)
@@ -30,3 +31,37 @@ reshape.long <- function(data, varying.list, idvar = "id",
 	long.data
 }
 
+reshape.wide <- function(data, idvar = "id", wvar = "time",
+	v.names, fun.aggregate = mean, order.by.variable = TRUE){
+	# Create new variable timevar, that combines the values of wvar
+	if (length(wvar) > 1L){
+		datanames <- names(data)
+		timevar <- make.unique(c(datanames, "time"))[length(datanames)+1L]
+		# Rename "sep" in wvar, if it exists, to avoid error in creating timevar
+		if (any(wvar=="sep")){
+			newsep <- make.unique(c(datanames, "sep"))[length(datanames)+1L]
+			names(data)[which(datanames=="sep")] <- newsep
+			wvar[which(wvar=="sep")] <- newsep
+		}
+		data[[timevar]] <- do.call(interaction, data[wvar])
+	}else timevar <- wvar
+	# Aggregate duplicated values of idvar and timevar
+	byvar <- c(idvar, timevar)
+	if (anyDuplicated(data[byvar])){
+		data <- aggregate(data[v.names], by = data[byvar], FUN = fun.aggregate)
+	}
+	# Call reshape
+	wide.data <- reshape(data, v.names = v.names, idvar = idvar,
+		timevar = timevar, direction = "wide")
+	newvars <- attr(wide.data, "reshapeWide")$varying
+	attr(wide.data, "reshapeWide") <- NULL
+	# Re-order the new columns
+	if (order.by.variable){
+		positions1 <- match(newvars, names(wide.data))
+		positions2 <- match(t(newvars), names(wide.data))
+		varorder <- seq_along(wide.data)
+		varorder[positions1] <- positions2
+		wide.data <- wide.data[varorder]
+	}
+	wide.data
+}
