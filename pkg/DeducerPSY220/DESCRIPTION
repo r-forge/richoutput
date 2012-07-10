@@ -2,7 +2,7 @@ Package: DeducerPSY220
 Type: Package
 Title: PSY220 Deducer Plug-In
 Version: 0.3
-Date: 2011-02-14
+Date: 2012-07-10
 Author: Bill Altermatt
 Maintainer: Bill Altermatt <altermattw@hanover.edu>
 Depends: DeducerRichOutput
