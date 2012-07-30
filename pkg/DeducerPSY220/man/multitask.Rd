@@ -90,20 +90,4 @@ Bauer, K., DeVincentis, D., & Taber, J. (2008). Gender differences in the effect
 Available online at:
 http://vault.hanover.edu/~altermattw/methods/assets/posterpics/Winter2008/Bauer-Devincentis-Taber.pdf
 }
-\examples{
-library(DeducerPSY220)
-data(multitask)
-multitask.long <- melt(data = multitask
-, id.vars = c("Participant", "Gender", "Age", "Year", "Greek", "GPA", "EC", "MovieOne", "MovieTwo"),
-, measure.vars = c("MathOne", "MathTwo"),
-, variable_name = "math"
-, na.rm = TRUE
-)
-multitask.long1 <- melt(data = multitask.long
-, id.vars = c("Participant", "Gender", "Age", "Year", "Greek", "GPA", "EC", "math", "value"),
-, measure.vars = c("MovieOne", "MovieTwo"),
-, variable_name = "movie"
-, na.rm = TRUE
-)
-}
 \keyword{datasets}

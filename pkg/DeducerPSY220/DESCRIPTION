@@ -1,12 +1,9 @@
 Package: DeducerPSY220
-Type: Package
+Version: 0.4
+Date: 2012-07-30
 Title: PSY220 Deducer Plug-In
-Version: 0.3
-Date: 2012-07-10
 Author: Bill Altermatt
 Maintainer: Bill Altermatt <altermattw@hanover.edu>
 Depends: DeducerRichOutput
 Description: Analysis Dialogs for Hanover College PSY 220 course
 License: GPL-2
-LazyLoad: yes
-LazyData: no

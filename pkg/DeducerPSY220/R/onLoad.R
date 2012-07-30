@@ -1,5 +1,4 @@
-.First.lib <- function(libname, pkgname) {
-	.jpackage(pkgname, lib.loc = libname)
+.onLoad <- function(libname, pkgname) {
 		deducer.addMenuItem("Compute Mean",,"getMeanDialog()$run()","Data")
 		deducer.addMenuItem("Combine Variables",,"getCVDialog()$run()","Data")
 		deducer.addMenuItem("Paired Samples Test",,"getPairedDialog()$run()","Analysis")

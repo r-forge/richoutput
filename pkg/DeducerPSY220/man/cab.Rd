@@ -57,18 +57,4 @@ The design was a 3 (race: Caucasian, Hispanic, African-American) by 3 (crime: Dr
 Violent) completely within-subjects design.
 }
 
-\examples{
-data(cab)
-library(reshape)
-cab2 <- melt(data = cab
-, measure.vars = c("PC", "PA", "PH", "DC", "DA", "DH", "VC", "VA", "VH"),
-, variable_name = "cond"
-, na.rm = TRUE
-)
-
-names(cab2)[names(cab2)=="value"]<-"sentence"
-cab2[c("crime")] <- recode.variables(cab2[c("cond")] , "'PC' -> 'P';'PA' -> 'P';'PH' -> 'P';'DC' -> 'D';'DH' -> 'D';'DA' -> 'D';'VC' -> 'V';'VA' -> 'V';'VH' -> 'V';")
-cab2[c("race")] <- recode.variables(cab2[c("cond")] , "'PC' -> 'C';'DC' -> 'C';'VC' -> 'C';'PA' -> 'A';'DA' -> 'A';'VA' -> 'A';'PH' -> 'H';'DH' -> 'H';'VH' -> 'H';")
-
-}
 \keyword{datasets}

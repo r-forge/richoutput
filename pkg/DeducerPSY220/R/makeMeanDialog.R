@@ -36,6 +36,7 @@ makeMeanDialog <- function() {
 				
 		#add option to save reversed variables
 		saveReversed <- new(CheckBoxesWidget,c("Save reverse-scored variables","Print reliability"))
+		saveReversed$setDefaultModel("Print reliability")
 		saveReversed$setTitle("Options")
 		addComponent(meanDialog, saveReversed, 780, 990, 880, 420)
 
