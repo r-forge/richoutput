@@ -15,4 +15,7 @@
 		jgr.addMenuItem("Data", "Reshape W to L", "deducer('Reshape W to L')")
 		jgr.addMenuItem("Data", "Reshape L to W", "deducer('Reshape L to W')")
 	}
+	#Remove these next lines later
+	data(cab4)
+	new(J("DeducerReshape.WideToLong2"))$run()
 }
