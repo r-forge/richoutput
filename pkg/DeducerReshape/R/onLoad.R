@@ -3,7 +3,7 @@
 		return(NULL)
 	.jpackage(pkgname,lib.loc=libname) 	#loads ReshapeDialog.jar
 
-	WideToLong <<- J("DeducerReshape.WideToLong")
+	WideToLong <<- J("DeducerReshape.WideToLong2")
 	LongToWide <<- J("DeducerReshape.LongToWide")
 
 	deducer.addMenuItem("Reshape W to L",,".getWtLDialog()$run()","Data")
@@ -16,6 +16,6 @@
 		jgr.addMenuItem("Data", "Reshape L to W", "deducer('Reshape L to W')")
 	}
 	#Remove these next lines later
-	data(cab4)
-	new(J("DeducerReshape.WideToLong2"))$run()
+#	data(cab4)
+#	new(J("DeducerReshape.WideToLong2"))$run()
 }
