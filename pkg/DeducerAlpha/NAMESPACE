@@ -1,4 +1,3 @@
 exportPattern("[[:alpha:]]+")
-import(rJava, Deducer)
-
+import(rJava,Deducer)
 

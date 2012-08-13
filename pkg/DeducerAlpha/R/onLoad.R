@@ -8,7 +8,8 @@
 	deducer.addMenuItem("Cronbach Alpha",,".getAlphaDialog()$run()","Analysis")
 	if(.windowsGUI){			
 		winMenuAddItem("Analysis", "Cronbach Alpha", "deducer('Cronbach Alpha')")
-	}else if(.jgr){			
+	}else if(.jgr){	
+		jgr.addMenuSeparator("Analysis")		
 		jgr.addMenuItem("Analysis", "Cronbach Alpha", "deducer('Cronbach Alpha')")
 	}
 }
