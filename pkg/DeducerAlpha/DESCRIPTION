@@ -1,0 +1,10 @@
+Package: DeducerAlpha
+Type: Package
+Title: Tools for aggregating scale items
+Version: 0.1
+Date: 2012-08-08
+Author: Bill Altermatt
+Maintainer: Bill Altermatt <altermattw@hanover.edu>
+Description: Uses a Java GUI dialog to implement Cronbach's alpha. Includes methods for easily reverse-scoring items and previewing results.
+Depends: Deducer, rJava, DeducerRichOutput
+License: GPL-2
