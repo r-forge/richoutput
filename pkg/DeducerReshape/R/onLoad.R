@@ -11,7 +11,8 @@
 	if(.windowsGUI){			
 		winMenuAddItem("Data", "Reshape W to L", "deducer('Reshape W to L')")
 		winMenuAddItem("Data", "Reshape L to W", "deducer('Reshape L to W')")
-	}else if(.jgr){			
+	}else if(.jgr){	
+		jgr.addMenuSeparator("Data")
 		jgr.addMenuItem("Data", "Reshape W to L", "deducer('Reshape W to L')")
 		jgr.addMenuItem("Data", "Reshape L to W", "deducer('Reshape L to W')")
 	}
