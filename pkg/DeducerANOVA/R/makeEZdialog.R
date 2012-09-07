@@ -191,7 +191,7 @@ makeEZDialog <- function() {
 		
 			#Listen for the button to be pressed
 			ReshapeFunction <- function(cmd,ActionEvent){
-				getMeltDialog()$run()
+				.getWtLDialog()$run()
 				}
 			ReshapeListener <- new(ActionListener)
 			ReshapeListener$setFunction(toJava(ReshapeFunction))
