@@ -369,13 +369,10 @@ public class ANOVA extends SimpleRDialog implements ActionListener {
                     String command = generateCommand();
                     if(command.startsWith("Error")) 
                         JOptionPane.showMessageDialog(this, command);
-                    else {
-                        if(Deducer.isLoaded("DeducerRichOutput")) Deducer.execute("cat(h.results("+command+"))");
-                        else {
+                    else {                        
                             Deducer.eval(command);
                             Deducer.execute("print("+tmp+")");
-                        }
-                    }
+                         }
                     Deducer.eval("if(exists("+tmp+") rm("+tmp+")"); // Removing tmp results object
                     /*
                      * TODO:  Provide option to keep results object
