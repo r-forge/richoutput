@@ -11,6 +11,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 
 import org.rosuda.JGR.JGRConsole;
 import org.rosuda.JGR.JGR;
@@ -42,96 +43,106 @@ public class OutputController {
 //        public static Titles titles = new Titles();
 
 	public static void replaceConsole(){
-		
-		record = new OutputRecord();
-//                record.listen();
-		
-		console = JGR.MAINRCONSOLE;
-		
-		Component oldSplitPane = console.getContentPane().getComponent(1);
-		console.getContentPane().remove(oldSplitPane);
-		//System.out.println(console.getContentPane().getComponent(0).toString());
-		//System.out.println(console.getContentPane().getComponent(1).toString());
-		
-		final JSplitPane consolePanel = new JSplitPane(
-				JSplitPane.VERTICAL_SPLIT);
-                final JSplitPane titlePanel = new JSplitPane(
-                                JSplitPane.HORIZONTAL_SPLIT);
-                input = new SyntaxInput("console", true);
-		console.input = input;
-		console.inputDoc = input.getDocument();
-		input.addKeyListener(new InputListener());
-		input.setWordWrap(false);
-		input.addFocusListener(console);
-		
-		output = new HTMLConsoleOutput();
-		console.output = output;
-		console.outputDoc = output.getDocument();
-		output.setEditable(false);
-		output.addFocusListener(console);
-		output.addKeyListener(console);
-		output.setDragEnabled(true);
+		SwingUtilities.invokeLater(new Runnable(){
 
-                elements.setContentType("text/html");
-
-//                JScrollPane titleScroll = new JScrollPane(titles);
-//                titleScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-                JScrollPane sp1 = new JScrollPane(output);
-		sp1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-                final JTabbedPane tabbedPane = new JTabbedPane();
-                tabbedPane.addTab("Console View", sp1);
-                JScrollPane tabbedScroll = new JScrollPane(elements);
-		tabbedScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-                tabbedPane.addTab("Element View", tabbedScroll);
-                consolePanel.setTopComponent(tabbedPane);
-
-		JScrollPane sp2 = new JScrollPane(input);
-		sp2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		consolePanel.setBottomComponent(sp2);
-		consolePanel.setDividerLocation(((int) ((double) console.getHeight() * 0.70)));
-                consolePanel.setOneTouchExpandable(true);
-                titles = new Titles();
-                titlePanel.setLeftComponent(titles);
-                titlePanel.setRightComponent(consolePanel);
-                titlePanel.setDividerLocation(((int) ((double) console.getWidth() * 0.20)));
-                titlePanel.setOneTouchExpandable(true);
-		console.getContentPane().add(titlePanel);
-		console.addComponentListener(new ComponentAdapter() {
-			public void componentResized(ComponentEvent evt) {
-				super.componentResized(evt);
-				if (JGR.getREngine() != null && JGR.STARTED) {
-					try {
-						JGR.eval("options(width=" + console.getFontWidth() + ")");
-					} catch (REngineException e) {
-						new ErrorMsg(e);
-					} catch (REXPMismatchException e) {
-						new ErrorMsg(e);
-					}
-				}
-				consolePanel
-						.setDividerLocation(((int) ((double) console.getHeight() * 0.70)));
-			}
-
-		});
+			public void run() {
+				record = new OutputRecord();
+//              record.listen();
+			
+			console = JGR.MAINRCONSOLE;
+			
+			Component oldSplitPane = console.getContentPane().getComponent(1);
+			console.getContentPane().remove(oldSplitPane);
+			//System.out.println(console.getContentPane().getComponent(0).toString());
+			//System.out.println(console.getContentPane().getComponent(1).toString());
+			
+			final JSplitPane consolePanel = new JSplitPane(
+					JSplitPane.VERTICAL_SPLIT);
+	              final JSplitPane titlePanel = new JSplitPane(
+	                              JSplitPane.HORIZONTAL_SPLIT);
+	              input = new SyntaxInput("console", true);
+			console.input = input;
+			console.inputDoc = input.getDocument();
+			input.addKeyListener(new InputListener());
+			input.setWordWrap(false);
+			input.addFocusListener(console);
+			
+			output = new HTMLConsoleOutput();
+			console.output = output;
+			console.outputDoc = output.getDocument();
+			output.setEditable(false);
+			output.addFocusListener(console);
+			output.addKeyListener(console);
+			output.setDragEnabled(true);
 	
-		/*
-                 * Routing output through RichOutputConnector
-                 */
-                Deducer.setRConnector(new RichOutputConnector());
+	              elements.setContentType("text/html");
+	
+	//              JScrollPane titleScroll = new JScrollPane(titles);
+	//              titleScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	
+	              JScrollPane sp1 = new JScrollPane(output);
+			sp1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	
+	              final JTabbedPane tabbedPane = new JTabbedPane();
+	              tabbedPane.addTab("Console View", sp1);
+	              JScrollPane tabbedScroll = new JScrollPane(elements);
+			tabbedScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	              tabbedPane.addTab("Element View", tabbedScroll);
+	              consolePanel.setTopComponent(tabbedPane);
+	
+			JScrollPane sp2 = new JScrollPane(input);
+			sp2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+			consolePanel.setBottomComponent(sp2);
+			consolePanel.setDividerLocation(((int) ((double) console.getHeight() * 0.70)));
+	              consolePanel.setOneTouchExpandable(true);
+	              titles = new Titles();
+	              titlePanel.setLeftComponent(titles);
+	              titlePanel.setRightComponent(consolePanel);
+	              titlePanel.setDividerLocation(((int) ((double) console.getWidth() * 0.20)));
+	              titlePanel.setOneTouchExpandable(true);
+			console.getContentPane().add(titlePanel);
+			console.validate();
+			console.repaint();
+			/*console.addComponentListener(new ComponentAdapter() {
+				public void componentResized(ComponentEvent evt) {
+					super.componentResized(evt);
+					if (JGR.getREngine() != null && JGR.STARTED) {
+						try {
+							int w = console.getFontWidth();
+							if(w>0)
+								JGR.eval("options(width=" + w + ")");
+						} catch (REngineException e) {
+							new ErrorMsg(e);
+						} catch (REXPMismatchException e) {
+							new ErrorMsg(e);
+						}
+					}
+					consolePanel
+							.setDividerLocation(((int) ((double) console.getHeight() * 0.70)));
+				}
+	
+			});*/
+		
+			/*
+	               * Routing output through RichOutputConnector
+	               */
+	              Deducer.setRConnector(new RichOutputConnector());
+	
+	              /*
+	               * Adding preferences panel
+	               */
+	              DeducerRichPrefs.initialize();
+	              PanelRichPrefs richPrefs = new PanelRichPrefs();
+	              PrefDialog.addPanel(richPrefs, richPrefs);
+	
+	//		mainHistoryWindow = new HistoryWindow(console);
+	//		mainHistoryWindow.setVisible(true);
+	
+	//              codeSpy = new HTMLViewer();
+			}
+			
+		});
 
-                /*
-                 * Adding preferences panel
-                 */
-                DeducerRichPrefs.initialize();
-                PanelRichPrefs richPrefs = new PanelRichPrefs();
-                PrefDialog.addPanel(richPrefs, richPrefs);
-
-//		mainHistoryWindow = new HistoryWindow(console);
-//		mainHistoryWindow.setVisible(true);
-
-//                codeSpy = new HTMLViewer();
 
 	}
 	
