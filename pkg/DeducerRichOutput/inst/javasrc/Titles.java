@@ -29,6 +29,8 @@ public class Titles extends JPanel {
         list.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {
                 int index = list.getSelectedIndex();
+                if(index<0 || index >= OutputController.record.size())
+                	return;
                 itemSelected(index);
 //                 int index = list.getSelectedIndex();
 //                        OutputElement elem = (OutputElement) OutputController.record.get(index); // Retrieving the selected element from OutputRecord

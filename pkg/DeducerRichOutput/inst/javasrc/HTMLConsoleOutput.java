@@ -10,13 +10,17 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.text.*;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
@@ -36,56 +40,143 @@ import org.rosuda.deducer.Deducer;
  */
 public class HTMLConsoleOutput extends ConsoleOutput {
 
-        private String code;
+        private String resultBuffer = "";
+        private String cmdBuffer = "";
         private Boolean continues = false;
         private Boolean waitingForPre = false;
         private Boolean waitingForSlashPre = false;
         private String beginning = "";
         private StringBuilder sb = new StringBuilder();
-
+        Date lastResultPrint;
+        
+        //private JTextArea ar;
         public HTMLConsoleOutput() {
 		if (FontTracker.current == null)
 			FontTracker.current = new FontTracker();
 		FontTracker.current.add(this);
 		this.setContentType("text/html");
 		this.setEditorKit(new HTMLEditorKit());
-                
+        HTMLEditorKit ed = (HTMLEditorKit) this.getEditorKit();
+        this.setDocument(ed.createDefaultDocument());
+        HTMLDocument doc = (HTMLDocument) this.getDocument();     
+        resultBuffer = "";
+        cmdBuffer="";
+        //JFrame frame = new JFrame();
+        //frame.setVisible(true);
+        //frame.add(ar = new JTextArea());
+
 	}
 
-        /**
+     /**
 	 * Open export dialog.
 	 */
 	public void startExport() {
 		new ExportOutput(this);
 	}
-
+	
+	private void printResultBuffer(){
+		try{
+			HTMLDocument doc = (HTMLDocument) this.getDocument();
+			HTMLEditorKit ed = (HTMLEditorKit) this.getEditorKit();
+            int preInd = resultBuffer.indexOf("</pre>");
+            String out;
+            String html;
+            if(preInd > -1){
+            	out = resultBuffer.substring(0, preInd);
+            	html = resultBuffer.substring(preInd);
+            }else{
+            	out = resultBuffer;
+            	html = "";
+            }
+        	if(out.length()>0){
+        		out = out.replaceAll("&","&amp;").replaceAll("<","&lt;")
+        		.replaceAll(">","&gt;");
+        		out = "<pre><font color = \"#"+ 
+        				Integer.toHexString(JGRPrefs.RESULTColor.getRGB()).substring(2) + 
+        				"\">" + out + "</font></pre>";
+        		ed.insertHTML(doc, doc.getLength(), 
+        				out, 0, 0, null);
+        	}	
+        	if(html.length()>0){
+                StyleSheet styleSheet = ed.getStyleSheet();
+                styleSheet.addRule("body {margin-left:10px; margin-top:10px; margin-right:10px; margin-bottom:10px;}");
+                styleSheet.addRule("body {color:" + DeducerRichPrefs.bodyFontColor + "; font-family:" + DeducerRichPrefs.bodyFontFamily + "; font-size: " + DeducerRichPrefs.bodyFontSize + "px;}");
+                styleSheet.addRule("body {background-color:white;}");
+                // internal borders:
+                styleSheet.addRule("table, td, th {border-top-style: solid; border-top-color: black; border-top-width: " + DeducerRichPrefs.tableBorderThickness + "px;}");
+                // table header and cells
+                styleSheet.addRule("td, th {padding-right: 10px; padding-left: 10px;}");
+                styleSheet.addRule("th {font-style: " + DeducerRichPrefs.THfontStyle + "; font-weight: " + DeducerRichPrefs.THfontWeight + "; text-align: " + DeducerRichPrefs.THtextAlign + "; background-color:" + DeducerRichPrefs.THbackgroundColor + ";}");
+                styleSheet.addRule("td {font-style: normal; font-weight: normal; text-align: " + DeducerRichPrefs.TDtextAlign + ";}");
+                // alternating row colors. Use "<tr class=\"d0\"> and "<tr class=\"d1\"> to activate.
+                styleSheet.addRule("tr.d0 td {background-color: #ffffff; color: black;}"); // white
+                styleSheet.addRule("tr.d1 td {background-color: " + DeducerRichPrefs.alternatingRowColor + "; color: black;}"); // light blue
+                // text elements
+                styleSheet.addRule("div {text-indent: 10 px;}");
+                styleSheet.addRule("p.b {margin-top: 7px; margin-bottom: 7px; font-weight: bold;}");
+                styleSheet.addRule("th.section {padding-top: 10px; padding-bottom: 10px; text-align: center; font-style: normal; font-weight: bold");
+                // pre tag formatting to remove extra line break
+                //styleSheet.addRule("pre {margin-bottom: 0px; margin-top: 0px}");
+        		if(html.endsWith("<pre>")){
+        			html = "<pre>"  + html + "</pre>";
+            		ed.insertHTML(doc, doc.getLength(), 
+            				 html , 0, 0, null);  
+            		
+        		}else{
+        			html = "<pre>"  + html;
+            		ed.insertHTML(doc, doc.getLength(), 
+            				html, 0, 0, null);  
+        		}
+        	}
+            OutputElement el = OutputController.record.getActiveElement();
+            if(el!=null) {
+                    el.setOutput(el.getOutput() + out + html );
+            }
+		}catch(Exception e){}
+		lastResultPrint = new Date();
+	}
 	public void append(String str,AttributeSet a){
 		HTMLDocument doc = (HTMLDocument) this.getDocument();
-                HTMLEditorKit ed = (HTMLEditorKit) this.getEditorKit();
-                /**
-                 * Adding CSS styling.                 
-                 */
-                StyleSheet styleSheet = ed.getStyleSheet();
-                     styleSheet.addRule("body {margin-left:10px; margin-top:10px; margin-right:10px; margin-bottom:10px;}");
-                     styleSheet.addRule("body {color:" + DeducerRichPrefs.bodyFontColor + "; font-family:" + DeducerRichPrefs.bodyFontFamily + "; font-size: " + DeducerRichPrefs.bodyFontSize + "px;}");
-                     styleSheet.addRule("body {background-color:white;}");
-                     // internal borders:
-                     styleSheet.addRule("table, td, th {border-top-style: solid; border-top-color: black; border-top-width: " + DeducerRichPrefs.tableBorderThickness + "px;}");
-                     // table header and cells
-                     styleSheet.addRule("td, th {padding-right: 10px; padding-left: 10px;}");
-                     styleSheet.addRule("th {font-style: " + DeducerRichPrefs.THfontStyle + "; font-weight: " + DeducerRichPrefs.THfontWeight + "; text-align: " + DeducerRichPrefs.THtextAlign + "; background-color:" + DeducerRichPrefs.THbackgroundColor + ";}");
-                     styleSheet.addRule("td {font-style: normal; font-weight: normal; text-align: " + DeducerRichPrefs.TDtextAlign + ";}");
-                     // alternating row colors. Use "<tr class=\"d0\"> and "<tr class=\"d1\"> to activate.
-                     styleSheet.addRule("tr.d0 td {background-color: #ffffff; color: black;}"); // white
-                     styleSheet.addRule("tr.d1 td {background-color: " + DeducerRichPrefs.alternatingRowColor + "; color: black;}"); // light blue
-                     // text elements
-                     styleSheet.addRule("div {text-indent: 10 px;}");
-                     styleSheet.addRule("p.b {margin-top: 7px; margin-bottom: 7px; font-weight: bold;}");
-                     styleSheet.addRule("th.section {padding-top: 10px; padding-bottom: 10px; text-align: center; font-style: normal; font-weight: bold");
-                     // pre tag formatting to remove extra line break
-                     styleSheet.addRule("pre {margin-bottom: 0px; margin-top: 0px}");
+        HTMLEditorKit ed = (HTMLEditorKit) this.getEditorKit();
 
-                try{
+        try{
+        	if(a == JGRPrefs.CMD){
+            	if(resultBuffer.length()>0){
+        			printResultBuffer();
+		        	resultBuffer = "";
+	        	}
+	        	cmdBuffer = cmdBuffer + str;
+	        }else{
+	        	if(cmdBuffer.length()>0){
+	        		//ar.append(cmdBuffer);
+	        		cmdBuffer = cmdBuffer.replaceAll("&","&amp;").replaceAll("<","&lt;")
+		    	    		.replaceAll(">","&gt;");
+	        		cmdBuffer = "<pre><font color = \"#"+ 
+		    	    		Integer.toHexString(JGRPrefs.CMDColor.getRGB()).substring(2) + 
+		    	    		"\">" + cmdBuffer + "</font></pre>";
+	        		cmdBuffer = "<pre><font color = \"#"+ 
+	        				Integer.toHexString(JGRPrefs.RESULTColor.getRGB()).substring(2) + 
+	        				"\">" + cmdBuffer + "</font></pre>";
+		    	    ed.insertHTML(doc, doc.getLength(), 
+		    	    		cmdBuffer, 0, 0, null); 
+		    	    cmdBuffer = "";
+		    	    lastResultPrint =null;
+	        	}
+	        	resultBuffer = resultBuffer + str;
+	        	if(lastResultPrint != null && 
+	        			(new Date().getTime() - lastResultPrint.getTime())>5000){
+	        		printResultBuffer();
+		        	resultBuffer = "";	        		
+	        	}
+	        	if(lastResultPrint == null)
+	        		lastResultPrint = new Date();
+	        }
+        }catch(Exception e){
+        	e.printStackTrace();
+        }
+        int index = OutputController.record.size();
+        if (index >= 1) OutputController.titles.setIndex(index-1);
+        /*                try{
                     if(a == JGRPrefs.RESULT){
                         if (!str.startsWith("</pre>")) { // doesn't start with </pre> so is not HTML
                              str = str.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
@@ -93,81 +184,7 @@ public class HTMLConsoleOutput extends ConsoleOutput {
                             }
                         
 
-                        // Using a buffer to store up unclosed </pre> tags
-                            // Causes problems if function interrupted before closing tag is printed.
-//                        do {
-//                            if(waitingForPre) { // HTML code at beginning
-//                                if (!str.contains("<pre>")) { // all HTML, no closing tag
-//                                    sb.append(str);
-//                                    str = ""; // setting str.length() = 0
-//                                    }
-//                                else {
-//                                    int cutPoint = str.indexOf("<pre>")+4;
-//                                    sb.append(str.substring(0,cutPoint));
-//                                    waitingForPre = false;
-//                                    if (cutPoint == str.length()-1) str=""; // end of str
-//                                    else str = str.substring(cutPoint+1,str.length()-1);
-//                                    }
-//                            }
-//                            if(waitingForSlashPre) { // plain-text at the beginning
-//                                if(!str.contains("</pre>")) { // all plain-text
-//                                    str = str.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
-//                                    sb.append(str);
-//                                    str="";
-//                                    }
-//                                else { // it does contain the </pre> tag
-//                                    waitingForSlashPre = false;
-//                                    int cutPoint = str.indexOf("</pre>")+5;
-//                                    String before = str.substring(0,cutPoint);
-//                                    before = before.replaceAll("</pre>", "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
-//                                    sb.append(before);
-//                                    if (cutPoint == str.length()-1) str=""; // end of str
-//                                    else str = str.substring(cutPoint+1,str.length()-1);
-//                                    }
-//                            }
-//                            if(!str.startsWith("<pre>") && !str.startsWith("</pre>")) { // not HTML
-//                                str = str.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
-//                                sb.append(str);
-//                                str="";
-//                                }
-//                            else if (str.startsWith("<pre>")) { // starts with <pre>; render all up to </pre> into plain-text
-//                                if (str.contains("</pre>")) {
-//                                    int cutPoint = str.indexOf("</pre>")+5;
-//                                    sb.append(str.substring(0,cutPoint)); // keep original text within <pre> block
-//                                    if (cutPoint == str.length()-1) str = "";
-//                                    else str = str.substring(cutPoint+1,str.length()-1);
-//                                }
-//                                else { // no closing </pre> tag
-//                                    waitingForSlashPre = true;
-//                                    sb.append(str);
-//                                    str="";
-//                                }
-//                            }
-//                            else { // starts with </pre>
-//                                if (str.contains("<pre>")) { // contains closing tag
-//                                    int cutPoint = str.indexOf("<pre>")+4;
-//                                    String before = str.substring(0,cutPoint);
-//                                    sb.append(before); // adds the HTML
-//                                    if (cutPoint == str.length()-1) str = "";
-//                                    else str = str.substring(cutPoint+1,str.length()-1);
-//                                }
-//                                else { // no closing <pre> tag. Whole str is HTML
-//                                    waitingForPre = true;
-//                                    sb.append(str);
-//                                    str="";
-//                                }
-//                            }
-//                        } while (str.length() > 0);
-//
-//                        /*
-//                         * If there is an incomplete pair of <pre></pre> tags, wait for the complement to appear before printing
-//                         */
-//                        if (waitingForPre || waitingForSlashPre) return;
-//
-//                        else {
-//                            str = sb.toString();
-//                            sb.setLength(0); // clearing the StringBuilder
-//                        }
+                  
                         OutputElement el = OutputController.record.getActiveElement();
                             code = "<pre>" + str + "</pre>";
                             if(el!=null) {
@@ -180,8 +197,19 @@ public class HTMLConsoleOutput extends ConsoleOutput {
                             }
 
                     else if (a == JGRPrefs.CMD) {
-                        str = str.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
-                        if (continues) {
+                    	//if(str.equals("\n")){
+                    		//ed.insertHTML(doc,doc.getLength(),"\n",0,0,null);
+                    	//	return;
+                    	//}
+                        str = str.replaceAll("&","&amp;").replaceAll("<","&lt;")
+                        		.replaceAll(">","&gt;");
+                        str = str.trim();
+                        if(str.length()==0)
+                        	return;
+                   
+                        //ed.insertHTML(doc, doc.getLength(), "1", 0, 0, null);
+                        ed.insertHTML(doc, doc.getLength(), "<pre><font color = \"#"+ Integer.toHexString(JGRPrefs.CMDColor.getRGB()).substring(2) + "\">" + str + "</font></pre>", 0, 0, null);
+                        /*if (continues) {
                             str = beginning + str;
                             continues = false;
                             ed.insertHTML(doc, doc.getLength(), "<pre><font color = \"#"+ Integer.toHexString(JGRPrefs.CMDColor.getRGB()).substring(2) + "\">" + str + "</font></pre>", 0, 0, null);
@@ -194,16 +222,18 @@ public class HTMLConsoleOutput extends ConsoleOutput {
                         else {
                             str = str.replaceAll("\n", "<br/>");
                             ed.insertHTML(doc, doc.getLength(), "<pre><font color = \"#"+ Integer.toHexString(JGRPrefs.CMDColor.getRGB()).substring(2) + "\">" + str + "</font></pre>", 0, 0, null);
-                        }
-                    }
+                        }*/
+ /*                   }
                     else{
-                            ed.insertHTML(doc, doc.getLength(), "<pre>" + str + "</pre>", 0, 0, null);
+                            //ed.insertHTML(doc, doc.getLength(), "<pre>" + str + "</pre>", 0, 0, null);
                     }
+                    //JOptionPane.showMessageDialog(null, doc.toString());
+                    
 		}catch(Exception e){JOptionPane.showMessageDialog(null,"error:"+e.toString());
 			e.printStackTrace();}        
         int index = OutputController.record.size();
         if (index >= 1) OutputController.titles.setIndex(index-1);
-        }
+        */}
 
        private void saveToFile(File file, StringBuffer bf) {
 		try {

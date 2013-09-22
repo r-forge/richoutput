@@ -32,7 +32,7 @@ print_to_html <- function(x,...){
 .onLoad <- function(libname, pkgname) { 
 	#loads RichOutput.jar
 	.jpackage(pkgname,lib.loc=libname)
-	
+
 	#replaces the input and output of the console 
 	#with rich output enabled components.
 	if(.jgr){
