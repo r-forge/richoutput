@@ -48,7 +48,7 @@ public class HTMLConsoleOutput extends ConsoleOutput {
         private String beginning = "";
         private StringBuilder sb = new StringBuilder();
         Date lastResultPrint;
-        
+        boolean cmdWasLast = false;
         //private JTextArea ar;
         public HTMLConsoleOutput() {
 		if (FontTracker.current == null)
@@ -75,6 +75,9 @@ public class HTMLConsoleOutput extends ConsoleOutput {
 	}
 	
 	private void printResultBuffer(){
+		resultBuffer = resultBuffer.replaceAll("\n+$", "");
+		if(resultBuffer.length()==0)
+			return;
 		try{
 			HTMLDocument doc = (HTMLDocument) this.getDocument();
 			HTMLEditorKit ed = (HTMLEditorKit) this.getEditorKit();
@@ -94,6 +97,7 @@ public class HTMLConsoleOutput extends ConsoleOutput {
         		out = "<pre><font color = \"#"+ 
         				Integer.toHexString(JGRPrefs.RESULTColor.getRGB()).substring(2) + 
         				"\">" + out + "</font></pre>";
+        		//ar.append("\"" + out+"\"");
         		ed.insertHTML(doc, doc.getLength(), 
         				out, 0, 0, null);
         	}	
@@ -116,7 +120,7 @@ public class HTMLConsoleOutput extends ConsoleOutput {
                 styleSheet.addRule("p.b {margin-top: 7px; margin-bottom: 7px; font-weight: bold;}");
                 styleSheet.addRule("th.section {padding-top: 10px; padding-bottom: 10px; text-align: center; font-style: normal; font-weight: bold");
                 // pre tag formatting to remove extra line break
-                //styleSheet.addRule("pre {margin-bottom: 0px; margin-top: 0px}");
+                styleSheet.addRule("pre {margin-bottom: 0px; margin-top: 0px;line-height=0}");
         		if(html.endsWith("<pre>")){
         			html = "<pre>"  + html + "</pre>";
             		ed.insertHTML(doc, doc.getLength(), 
@@ -127,50 +131,68 @@ public class HTMLConsoleOutput extends ConsoleOutput {
             		ed.insertHTML(doc, doc.getLength(), 
             				html, 0, 0, null);  
         		}
+        		//ar.append("\"" + html+"\"");
         	}
             OutputElement el = OutputController.record.getActiveElement();
             if(el!=null) {
                     el.setOutput(el.getOutput() + out + html );
             }
 		}catch(Exception e){}
-		lastResultPrint = new Date();
+	}
+	
+	private void printCmdBuffer(){
+		if(cmdBuffer.length()==0)
+			return;
+		try{
+			HTMLDocument doc = (HTMLDocument) this.getDocument();
+	        HTMLEditorKit ed = (HTMLEditorKit) this.getEditorKit();
+			cmdBuffer = cmdBuffer.replaceAll("&","&amp;").replaceAll("<","&lt;")
+		    		.replaceAll(">","&gt;");
+			cmdBuffer = "<pre><font color = \"#"+ 
+					Integer.toHexString(JGRPrefs.CMDColor.getRGB()).substring(2) + 
+					"\">" + cmdBuffer + "</font></pre>";
+			//ar.append("\"" + cmdBuffer+"\"");
+		    ed.insertHTML(doc, doc.getLength(), 
+		    		cmdBuffer, 0, 0, null); 
+		}catch(Exception e){}
 	}
 	public void append(String str,AttributeSet a){
 		HTMLDocument doc = (HTMLDocument) this.getDocument();
         HTMLEditorKit ed = (HTMLEditorKit) this.getEditorKit();
-
         try{
         	if(a == JGRPrefs.CMD){
             	if(resultBuffer.length()>0){
         			printResultBuffer();
+        			lastResultPrint = new Date();
 		        	resultBuffer = "";
-	        	}
+	        	}            	
 	        	cmdBuffer = cmdBuffer + str;
+	        	if(cmdWasLast && lastResultPrint != null && 
+	        			(new Date().getTime() - lastResultPrint.getTime())>5000){
+		        	printCmdBuffer();
+		        	cmdBuffer = "";
+		        	lastResultPrint = new Date();
+	        	}
+	        	cmdWasLast = true;
 	        }else{
-	        	if(cmdBuffer.length()>0){
-	        		//ar.append(cmdBuffer);
-	        		cmdBuffer = cmdBuffer.replaceAll("&","&amp;").replaceAll("<","&lt;")
-		    	    		.replaceAll(">","&gt;");
-	        		cmdBuffer = "<pre><font color = \"#"+ 
-		    	    		Integer.toHexString(JGRPrefs.CMDColor.getRGB()).substring(2) + 
-		    	    		"\">" + cmdBuffer + "</font></pre>";
-	        		cmdBuffer = "<pre><font color = \"#"+ 
-	        				Integer.toHexString(JGRPrefs.RESULTColor.getRGB()).substring(2) + 
-	        				"\">" + cmdBuffer + "</font></pre>";
-		    	    ed.insertHTML(doc, doc.getLength(), 
-		    	    		cmdBuffer, 0, 0, null); 
+	        	if(str.equals("\n") && resultBuffer.length()==0){
+	        		//cmdBuffer = cmdBuffer + str;
+	        	}else if(cmdBuffer.length()>0){
+	        		printCmdBuffer();
 		    	    cmdBuffer = "";
-		    	    lastResultPrint =null;
+		    	    lastResultPrint = new Date();
 	        	}
 	        	resultBuffer = resultBuffer + str;
-	        	if(lastResultPrint != null && 
+	        	if(!cmdWasLast && lastResultPrint != null && 
 	        			(new Date().getTime() - lastResultPrint.getTime())>5000){
 	        		printResultBuffer();
-		        	resultBuffer = "";	        		
+		        	resultBuffer = "";	
+		        	lastResultPrint = new Date();
 	        	}
-	        	if(lastResultPrint == null)
-	        		lastResultPrint = new Date();
+	        	cmdWasLast = false;
 	        }
+        	if(lastResultPrint == null)
+        		lastResultPrint = new Date();
         }catch(Exception e){
         	e.printStackTrace();
         }
